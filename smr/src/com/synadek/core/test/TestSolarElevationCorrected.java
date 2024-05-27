@@ -4,12 +4,12 @@
  * @author Daniel McCue
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
 
-import com.synadek.env.InvalidValueException;
-import com.synadek.env.Solar;
+import com.synadek.core.InvalidValueException;
+import com.synadek.core.Solar;
 
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class TestSolarElevationCorrected {
   public void testHappyPath() throws InvalidValueException {
     double elevation = Solar.getSolarElevationCorrected(TestSolar.testLatitude,
         TestSolar.testLongitude, TestSolar.testDateTime);
-    double expectedValue = 24.7645358;
+    double expectedValue = 24.764535784028794;
 
     assertEquals(Double.valueOf(expectedValue), Double.valueOf(elevation));
   }

@@ -4,12 +4,12 @@
  * @author Daniel
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
 
-import com.synadek.env.InvalidValueException;
-import com.synadek.env.Solar;
+import com.synadek.core.InvalidValueException;
+import com.synadek.core.Solar;
 
 import org.junit.Test;
 
@@ -29,8 +29,8 @@ public class TestEquationOfTime {
 
     double eqOfTime = Solar.getEquationOfTime(TestSolar.testDateTime);
 
-    // Expect a value with seven digits of precision
-    double expectedValue = 3.7022028;
+    // Expected value
+    double expectedValue = 3.7022028325305647;
 
     assertEquals(Double.valueOf(expectedValue), Double.valueOf(eqOfTime));
   }

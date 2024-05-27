@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package com.synadek.env;
+package com.synadek.core;
 
 import java.math.BigDecimal;
 import java.time.Duration;

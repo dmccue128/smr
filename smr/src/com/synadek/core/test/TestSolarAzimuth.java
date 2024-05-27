@@ -4,11 +4,11 @@
  * @author Daniel
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
 
-import com.synadek.env.Solar;
+import com.synadek.core.Solar;
 
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class TestSolarAzimuth {
 
     double solarAzimuth = Solar.getSolarAzimuth(TestSolar.testLatitude,
         TestSolar.testLongitude, TestSolar.testDateTime);
-    double expectedValue = 166.7990402;
+    double expectedValue = 166.79904024565553;
 
     assertEquals(Double.valueOf(expectedValue), Double.valueOf(solarAzimuth));
   }

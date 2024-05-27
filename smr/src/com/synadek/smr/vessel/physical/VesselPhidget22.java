@@ -147,12 +147,17 @@ public class VesselPhidget22 extends AbstractVesselModel implements DigitalInput
 	 * @throws ComponentException if an error occurs
 	 */
 	@Override
-	public final void connect() throws ComponentException {
+	public final boolean connect(boolean sim) throws ComponentException {
 
+		if (sim) {
+			log.error(ERR_SIM_NOT_AVAIL);
+			return false;
+		}
+		
 		// Ignore repeated connect requests
 		if (this.isConnected()) {
 			log.error("Ignoring repeated attempt to connect to " + this.getName());
-			return;
+			return false;
 		}
 
 		super.connect();
@@ -207,6 +212,7 @@ public class VesselPhidget22 extends AbstractVesselModel implements DigitalInput
 
 		// Launch event dispatch threads
 		this.startEventDispatchers();
+		return true;
 	}
 
 	/**

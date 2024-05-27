@@ -1,41 +1,41 @@
 /**
- * TestSunset.java
+ * TestSunrise.java
  *
  * @author Daniel
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
 
-import com.synadek.env.InvalidValueException;
-import com.synadek.env.Solar;
+import com.synadek.core.InvalidValueException;
+import com.synadek.core.Solar;
 
 import java.time.LocalTime;
 
 import org.junit.Test;
 
 /**
- * Test calculation of sunset at a location and day.
+ * Test calculation of sunrise at a location and time.
  */
-public class TestSunset {
+public class TestSunrise {
   /**
-   * Test basic calculation of sunset from a fixed, valid input.
+   * Test basic calculation of sunrise from a fixed, valid input.
    * 
    * @throws InvalidValueException
    *           if date/time is invalid
    */
   @Test
   public void testHappyPath() throws InvalidValueException {
-    final LocalTime sunset = Solar.getSunset(TestSolar.testLatitude,
+    final LocalTime sunrise = Solar.getSunrise(TestSolar.testLatitude,
         TestSolar.testLongitude, TestSolar.testDateTime);
-    int expectedHour = 16;
-    int expectedMinute = 29;
-    int expectedSecond = 54;
+    int expectedHour = 7;
+    int expectedMinute = 14;
+    int expectedSecond = 34;
 
-    assertEquals(Integer.valueOf(expectedHour), Integer.valueOf(sunset.getHour()));
-    assertEquals(Integer.valueOf(expectedMinute), Integer.valueOf(sunset.getMinute()));
-    assertEquals(Integer.valueOf(expectedSecond), Integer.valueOf(sunset.getSecond()));
+    assertEquals(Integer.valueOf(expectedHour), Integer.valueOf(sunrise.getHour()));
+    assertEquals(Integer.valueOf(expectedMinute), Integer.valueOf(sunrise.getMinute()));
+    assertEquals(Integer.valueOf(expectedSecond), Integer.valueOf(sunrise.getSecond()));
   }
 
   /**
@@ -46,9 +46,9 @@ public class TestSunset {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testNegativeLatitude() throws InvalidValueException {
-    final LocalTime sunset =
-        Solar.getSunset(-360.0, TestSolar.testLongitude, TestSolar.testDateTime);
-    System.out.println("Did not expect a value for sunset, but got: " + sunset);
+    final LocalTime sunrise =
+        Solar.getSunrise(-360.0, TestSolar.testLongitude, TestSolar.testDateTime);
+    System.out.println("Did not expect a value for sunrise, but got: " + sunrise);
   }
 
   /**
@@ -59,9 +59,9 @@ public class TestSunset {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testBadLatitude() throws InvalidValueException {
-    final LocalTime sunset =
-        Solar.getSunset(360.0, TestSolar.testLongitude, TestSolar.testDateTime);
-    System.out.println("Did not expect a value for sunset, but got: " + sunset);
+    final LocalTime sunrise =
+        Solar.getSunrise(360.0, TestSolar.testLongitude, TestSolar.testDateTime);
+    System.out.println("Did not expect a value for sunrise, but got: " + sunrise);
   }
 
   /**
@@ -72,9 +72,9 @@ public class TestSunset {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testNegativeLongitude() throws InvalidValueException {
-    final LocalTime sunset =
-        Solar.getSunset(TestSolar.testLatitude, -360.0, TestSolar.testDateTime);
-    System.out.println("Did not expect a value for sunset, but got: " + sunset);
+    final LocalTime sunrise =
+        Solar.getSunrise(TestSolar.testLatitude, -360.0, TestSolar.testDateTime);
+    System.out.println("Did not expect a value for sunrise, but got: " + sunrise);
   }
 
   /**
@@ -85,9 +85,9 @@ public class TestSunset {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testBadLongitude() throws InvalidValueException {
-    final LocalTime sunset =
-        Solar.getSunset(TestSolar.testLatitude, 360.0, TestSolar.testDateTime);
-    System.out.println("Did not expect a value for sunset, but got: " + sunset);
+    final LocalTime sunrise =
+        Solar.getSunrise(TestSolar.testLatitude, 360.0, TestSolar.testDateTime);
+    System.out.println("Did not expect a value for sunrise, but got: " + sunrise);
   }
 
   /**
@@ -98,8 +98,9 @@ public class TestSunset {
    */
   @Test(expected = NullPointerException.class)
   public void testNullInput() throws InvalidValueException {
-    final LocalTime sunset =
-        Solar.getSunset(TestSolar.testLatitude, TestSolar.testLongitude, null);
-    System.out.println("Did not expect a value for sunset, but got: " + sunset);
+    final LocalTime sunrise =
+        Solar.getSunrise(TestSolar.testLatitude, TestSolar.testLongitude, null);
+    System.out.println("Did not expect a value for sunrise, but got: " + sunrise);
   }
+
 }

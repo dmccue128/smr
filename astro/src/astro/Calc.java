@@ -6,11 +6,11 @@
 
 package astro;
 
-import com.synadek.env.InvalidValueException;
-import com.synadek.env.Solar;
-
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+
+import com.synadek.core.InvalidValueException;
+import com.synadek.core.Solar;
 
 /**
  * 

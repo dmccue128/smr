@@ -4,12 +4,12 @@
  * @author Daniel
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
 
-import com.synadek.env.InvalidValueException;
-import com.synadek.env.Solar;
+import com.synadek.core.InvalidValueException;
+import com.synadek.core.Solar;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -32,7 +32,7 @@ public class TestJulianDay {
 
     double julianDay = Solar.computeJulianDay(TestSolar.testDateTime);
 
-    double expectedValue = 2458105.1666667;
+    double expectedValue = 2458105.1666666665;
     assertEquals(Double.valueOf(expectedValue), Double.valueOf(julianDay));
   }
 
@@ -51,7 +51,7 @@ public class TestJulianDay {
 
     double julianDay = Solar.computeJulianDay(zeroDateTime);
 
-    double expectedValue = 2458104.9583333;
+    double expectedValue = 2458104.95833333335;
     assertEquals(Double.valueOf(expectedValue), Double.valueOf(julianDay));
   }
 

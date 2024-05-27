@@ -202,4 +202,13 @@ public class VesselSimulation extends AbstractVesselModel {
 
 	}
 
+	@Override
+	public boolean connect(boolean sim) throws ComponentException {
+		if (!sim) {
+			log.error("VesselSimulation must connect using sim=true");
+			return false;
+		}
+		return true;
+	}
+
 }

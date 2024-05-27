@@ -7,4 +7,4 @@
  * Unit tests for classes in the package, com.synadek.env.
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;

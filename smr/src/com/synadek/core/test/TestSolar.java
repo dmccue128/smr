@@ -4,7 +4,7 @@
  * @author Daniel McCue
  */
 
-package com.synadek.env.test;
+package com.synadek.core.test;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
