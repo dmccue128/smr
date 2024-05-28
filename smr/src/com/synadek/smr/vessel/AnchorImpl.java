@@ -159,7 +159,6 @@ public class AnchorImpl extends VesselComponentImpl implements Anchor, Controlle
 	 * @param desiredDepth is the new depth to which the anchor should be set. Depth
 	 *                     of zero means anchor fully raised.
 	 */
-	@SuppressWarnings("boxing")
 	private void drawAnchor(final float desiredDepth) {
 
 		// Compute acceptable results bounds
