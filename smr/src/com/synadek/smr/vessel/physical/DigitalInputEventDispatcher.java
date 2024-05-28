@@ -1,13 +1,13 @@
 /**
  * DigitalInputEventDispatcher.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.vessel.physical;
 
 import java.util.concurrent.LinkedBlockingQueue;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,13 +18,12 @@ public class DigitalInputEventDispatcher implements Runnable {
   /**
    * Acquire a reference to the application logger.
    */
-  protected final Logger log =
-      LogManager.getLogger(this.getClass().getPackage().getName());
+  protected final Logger log = LogManager.getLogger(this.getClass().getPackage().getName());
 
   /**
    * Queue of analog input events to be signaled to registered event handlers.
    */
-  private final LinkedBlockingQueue<DigitalInputEvent> aQueue;
+  private final LinkedBlockingQueue<DigitalInputEvent> digitalEventQueue;
 
   /**
    * VesselPhysicalModel implementation.
@@ -43,7 +42,7 @@ public class DigitalInputEventDispatcher implements Runnable {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param mdl
    *          PioMode implementation
    * @param myQueue
@@ -51,7 +50,7 @@ public class DigitalInputEventDispatcher implements Runnable {
    */
   public DigitalInputEventDispatcher(final VesselPhysicalModel mdl,
       final LinkedBlockingQueue<DigitalInputEvent> myQueue) {
-    aQueue = myQueue;
+    digitalEventQueue = myQueue;
     myPio = mdl;
     done = false;
     new Thread(this).start();
@@ -81,7 +80,7 @@ public class DigitalInputEventDispatcher implements Runnable {
 
     while (!done) {
       try {
-        DigitalInputEvent evt = aQueue.take();
+        DigitalInputEvent evt = digitalEventQueue.take();
         if (evt != null) {
           myPio.invokeDigitalInputHandlers(evt);
         }

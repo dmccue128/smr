@@ -1,6 +1,7 @@
 /**
  * Survey.java
- * 17 Mar 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -9,7 +10,6 @@ package com.synadek.smr.crew;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.json.simple.JSONObject;
 
 /**
@@ -23,7 +23,8 @@ public class Survey extends JSONObject {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Keep track of the responses of each crew member to whom the survey was addressed.
+   * Keep track of the responses of each crew member to whom the survey was
+   * addressed.
    */
   private final Map<CrewMember, Boolean> responses;
 
@@ -38,8 +39,8 @@ public class Survey extends JSONObject {
   private final JSONObject question;
 
   /**
-   * Default constructor
-   * 
+   * Default constructor.
+   *
    * @param toList
    *          the set of Crew Members to whom the survey is addressed
    * @param requestingParty
@@ -59,7 +60,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the Crew Member seeking the answer to the question.
-   * 
+   *
    * @return the Crew Member
    */
   public CrewMember getRequestor() {
@@ -68,7 +69,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the set of Crew Members to whom the survey is addressed.
-   * 
+   *
    * @return the Crew Members
    */
   public Set<CrewMember> getRecipients() {
@@ -77,7 +78,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the question that is asked in this survey.
-   * 
+   *
    * @return the question
    */
   public JSONObject getQuestion() {
@@ -86,7 +87,7 @@ public class Survey extends JSONObject {
 
   /**
    * Respond to the survey question.
-   * 
+   *
    * @param me
    *          the Crew Member who is responding
    * @param yes
@@ -98,7 +99,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the total number of Crew Members queried in this survey.
-   * 
+   *
    * @return the number
    */
   public synchronized int totalCount() {
@@ -107,7 +108,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the number of affirmative responses that have been received.
-   * 
+   *
    * @return the number of 'yes' responses
    */
   public synchronized int yesCount() {
@@ -122,7 +123,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the number of negative responses that have been received.
-   * 
+   *
    * @return the number of 'no' responses
    */
   public synchronized int noCount() {
@@ -137,7 +138,7 @@ public class Survey extends JSONObject {
 
   /**
    * Get the response (if any) provided by a specific Crew Member.
-   * 
+   *
    * @param member
    *          the Crew Member
    * @return the response or null if no response has been received yet.

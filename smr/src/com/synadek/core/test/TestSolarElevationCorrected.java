@@ -7,10 +7,8 @@
 package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
-
 import com.synadek.core.InvalidValueException;
 import com.synadek.core.Solar;
-
 import org.junit.Test;
 
 /**
@@ -20,7 +18,7 @@ public class TestSolarElevationCorrected {
 
   /**
    * Test basic calculation of solar elevation from a fixed, valid input.
-   * 
+   *
    * @throws InvalidValueException
    *           if date/time is invalid
    */
@@ -34,8 +32,9 @@ public class TestSolarElevationCorrected {
   }
 
   /**
-   * Test boundary condition in which an invalid (negative) latitude is provided.
-   * 
+   * Test boundary condition in which an invalid (negative) latitude is
+   * provided.
+   *
    * @throws InvalidValueException
    *           if latitude, longitude, or date/time is invalid
    */
@@ -47,8 +46,9 @@ public class TestSolarElevationCorrected {
   }
 
   /**
-   * Test boundary condition in which an invalid (excessively large) latitude is provided.
-   * 
+   * Test boundary condition in which an invalid (excessively large) latitude is
+   * provided.
+   *
    * @throws InvalidValueException
    *           if latitude, longitude, or date/time is invalid
    */
@@ -60,8 +60,9 @@ public class TestSolarElevationCorrected {
   }
 
   /**
-   * Test boundary condition in which an invalid (negative) longitude is provided.
-   * 
+   * Test boundary condition in which an invalid (negative) longitude is
+   * provided.
+   *
    * @throws InvalidValueException
    *           if latitude, longitude, or date/time is invalid
    */
@@ -73,8 +74,9 @@ public class TestSolarElevationCorrected {
   }
 
   /**
-   * Test boundary condition in which an invalid (excessively large) longitude is provided.
-   * 
+   * Test boundary condition in which an invalid (excessively large) longitude
+   * is provided.
+   *
    * @throws InvalidValueException
    *           if latitude, longitude, or date/time is invalid
    */
@@ -87,7 +89,7 @@ public class TestSolarElevationCorrected {
 
   /**
    * Test boundary condition in which a null date/time parameter is provided.
-   * 
+   *
    * @throws InvalidValueException
    *           if input is null
    */

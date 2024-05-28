@@ -1,6 +1,7 @@
 /**
  * VesselComponentImpl.java
- * 18 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -13,37 +14,41 @@ import com.synadek.core.AbstractComponent;
  */
 public abstract class VesselComponentImpl extends AbstractComponent implements VesselComponent {
 
-	private final VesselComponentType myType;
+  private final VesselComponentType myType;
 
-	/**
-	 * Simple constructor.
-	 * 
-	 * @param name the name of this component
-	 */
-	public VesselComponentImpl(final VesselComponentType type, final String name) {
-		super(name);
-		myType = type;
-	}
+  /**
+   * Simple constructor.
+   *
+   * @param name
+   *          the name of this component
+   */
+  public VesselComponentImpl(final VesselComponentType type, final String name) {
+    super(name);
+    myType = type;
+  }
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param name the name of this component
-	 * @param desc a description of the component
-	 */
-	public VesselComponentImpl(final VesselComponentType type, final String name, final String desc) {
-		super(name, desc);
-		myType = type;
-	}
+  /**
+   * Default constructor.
+   *
+   * @param name
+   *          the name of this component
+   * @param desc
+   *          a description of the component
+   */
+  public VesselComponentImpl(final VesselComponentType type, final String name,
+      final String desc) {
+    super(name, desc);
+    myType = type;
+  }
 
-	/**
-	 * Get the type of this component.
-	 * 
-	 * @return the vessel component type
-	 */
-	@Override
-	public VesselComponentType getComponentType() {
-		return myType;
-	}
+  /**
+   * Get the type of this component.
+   *
+   * @return the vessel component type
+   */
+  @Override
+  public VesselComponentType getComponentType() {
+    return myType;
+  }
 
 }

@@ -1,6 +1,7 @@
 /**
  * ControlledActuator.java 
- * 2 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -13,14 +14,14 @@ public interface ControlledActuator {
 
   /**
    * Get the current value of the actuator.
-   * 
+   *
    * @return the value
    */
   float getInputValue();
 
   /**
    * Set the desired output value of the actuator.
-   * 
+   *
    * @param newValue
    *          the desired value
    */

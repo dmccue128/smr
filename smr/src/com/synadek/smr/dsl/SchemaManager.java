@@ -1,22 +1,21 @@
 /**
  * SchemaManager.java
- * 3 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.dsl;
 
 import com.synadek.smr.database.Database;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * SchemaManager offers the service of upgrading or downgrading the database schema as required
- * (including data migration where appropriate).
+ * SchemaManager offers the service of upgrading or downgrading the database
+ * schema as required (including data migration where appropriate).
  */
 public class SchemaManager {
   /**
@@ -34,22 +33,21 @@ public class SchemaManager {
   private static final int VERSION_2 = 2;
 
   /**
-   * Base Schema Version is the lowest DB version to which we can downgrade and the lowest version
-   * from which we can upgrade.
+   * Base Schema Version is the lowest DB version to which we can downgrade and
+   * the lowest version from which we can upgrade.
    */
   private static final int BASE_SCHEMA_VERSION = VERSION_1;
 
   /**
-   * Save the file system path to the web application directory root. In case we need to access
-   * local files in the webapp tree.
+   * Save the file system path to the web application directory root. In case we
+   * need to access local files in the webapp tree.
    */
   private static String webappRoot;
 
   /**
    * Acquire a reference to the application logger.
    */
-  private static Logger log =
-      LogManager.getLogger(SchemaManager.class.getPackage().getName());
+  private static Logger log = LogManager.getLogger(SchemaManager.class.getPackage().getName());
 
   /**
    * Default constructor.
@@ -60,7 +58,7 @@ public class SchemaManager {
 
   /**
    * Retrieve the current schema version of the local database.
-   * 
+   *
    * @return the schema version
    */
   private int getSchemaVersion() {
@@ -68,17 +66,18 @@ public class SchemaManager {
   }
 
   /**
-   * upgradeDowngrade checks the version of the database schema against the required version for
-   * this software release and modifies the database to match the required version.
-   * 
+   * upgradeDowngrade checks the version of the database schema against the
+   * required version for this software release and modifies the database to
+   * match the required version.
+   *
    * @return true if successful
    */
   public final boolean upgradeDowngrade() {
 
     final int schemaVersion = getSchemaVersion();
 
-    final String preface = "Schema version: Required=" + REQUIRED_SCHEMA_VERSION
-        + ", Discovered=" + schemaVersion;
+    final String preface = "Schema version: Required=" + REQUIRED_SCHEMA_VERSION + ", Discovered="
+        + schemaVersion;
 
     if (schemaVersion == REQUIRED_SCHEMA_VERSION) {
       log.info(preface + " ==> match");
@@ -105,7 +104,7 @@ public class SchemaManager {
 
   /**
    * upgradeSchema advances the schema one version.
-   * 
+   *
    * @param fromVersion
    *          is the current version of the DB on this emitter
    * @param toVersion
@@ -121,21 +120,20 @@ public class SchemaManager {
 
     // Cannot upgrade prior to BASE SCHEMA VERSION
     if (fromVersion < BASE_SCHEMA_VERSION) {
-      log.error("Unable to update schema from version " + fromVersion + " to version "
-          + toVersion);
+      log.error(
+          "Unable to update schema from version " + fromVersion + " to version " + toVersion);
       return false;
     }
 
     // Cannot upgrade to a newer release than supported by this software
     // release.
     if (toVersion > REQUIRED_SCHEMA_VERSION) {
-      log.error("SW not capable to update schema from version " + fromVersion
-          + " to version " + toVersion);
+      log.error("SW not capable to update schema from version " + fromVersion + " to version "
+          + toVersion);
       return false;
     }
 
-    log.warn("Upgrading database from schema " + fromVersion + " to version " + toVersion
-        + "...");
+    log.warn("Upgrading database from schema " + fromVersion + " to version " + toVersion + "...");
 
     // Assume we're advancing one version at a time.
     // In each case, this may be modified to skip
@@ -164,8 +162,8 @@ public class SchemaManager {
     for (String s : cmds) {
       log.debug("Updating schema with SQL stmt, '" + s + "'...");
       if (Database.executeUpdate(s) < 0) {
-        log.error("While upgrading from version " + fromVersion + " to version "
-            + toVersion + ", an error occurred executing command: '" + s
+        log.error("While upgrading from version " + fromVersion + " to version " + toVersion
+            + ", an error occurred executing command: '" + s
             + "'. Manual intervention may be required.");
       }
     }
@@ -173,8 +171,7 @@ public class SchemaManager {
     // Perform any necessary post processing to update data values
     if (!upgradePostProcessing(fromVersion)) {
       log.error("Upgrade post-processing errors occurred while upgrading from version "
-          + fromVersion + " to version " + toVersion
-          + ".  Manual intervention may be required");
+          + fromVersion + " to version " + toVersion + ".  Manual intervention may be required");
       // Ignore error rather than return false;
     }
 
@@ -183,15 +180,16 @@ public class SchemaManager {
   }
 
   /**
-   * upgradePostProcessing performs any necessary post-process any updates on the upgraded
-   * structure.
+   * upgradePostProcessing performs any necessary post-process any updates on
+   * the upgraded structure.
    * <p>
-   * This is equivalent to the LLC file used on a reset database but this upgradePostProcessing
-   * method assumes it is starting from an existing, populated database that has been updated (in
-   * structure) and only needs values for the structures that have changed where LLC file assumes an
-   * empty database that needs all values populated.
+   * This is equivalent to the LLC file used on a reset database but this
+   * upgradePostProcessing method assumes it is starting from an existing,
+   * populated database that has been updated (in structure) and only needs
+   * values for the structures that have changed where LLC file assumes an empty
+   * database that needs all values populated.
    * </p>
-   * 
+   *
    * @param fromVersion
    *          is the version from which we are upgrading
    * @return true if successful
@@ -225,7 +223,7 @@ public class SchemaManager {
 
   /**
    * downgradeSchema reverts to a previous version.
-   * 
+   *
    * @param fromVersion
    *          is the current version of the DB schema for this emitter
    * @param toVersion
@@ -241,13 +239,13 @@ public class SchemaManager {
 
     // Cannot downgrade below version 1
     if (toVersion < BASE_SCHEMA_VERSION) {
-      log.error("Failed attempt to downgrade schema to " + toVersion
-          + ".  Base version is " + BASE_SCHEMA_VERSION);
+      log.error("Failed attempt to downgrade schema to " + toVersion + ".  Base version is "
+          + BASE_SCHEMA_VERSION);
       return false;
     }
 
-    log.warn("Downgrading database schema from version " + fromVersion + " to version "
-        + toVersion + "...");
+    log.warn("Downgrading database schema from version " + fromVersion + " to version " + toVersion
+        + "...");
 
     // To get from fromVersion to toVersion, advance one level at a time.
     final boolean success = downgradeOneLevel(fromVersion);
@@ -261,7 +259,7 @@ public class SchemaManager {
 
   /**
    * Issue a database command to downgrade one version.
-   * 
+   *
    * @param fromVersion
    *          is the current version of the database
    * @return true if successful
@@ -276,7 +274,7 @@ public class SchemaManager {
 
   /**
    * Get the web application root directory.
-   * 
+   *
    * @return the webappRoot
    */
   public static String getWebappRoot() {
@@ -285,7 +283,7 @@ public class SchemaManager {
 
   /**
    * Set the web application root directory.
-   * 
+   *
    * @param newWebappRoot
    *          the webappRoot to set
    */

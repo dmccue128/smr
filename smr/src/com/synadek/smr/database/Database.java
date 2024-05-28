@@ -1,6 +1,7 @@
 /**
  * Database.java
- * 3 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -20,11 +21,9 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -67,10 +66,11 @@ public class Database {
   }
 
   /**
-   * Static method getConnInstance manages the database connection. If we have not
-   * yet established a connection to the database, getConnInstance connects If we
-   * already connected once, getConnInstance returns that cached connection
-   * 
+   * Static method getConnInstance manages the database connection. If we have
+   * not yet established a connection to the database, getConnInstance connects
+   * If we already connected once, getConnInstance returns that cached
+   * connection
+   *
    * @return a database connection
    */
   private static synchronized Connection getConnInstance() {
@@ -114,7 +114,7 @@ public class Database {
 
   /**
    * Create a new Statement object for the local DB.
-   * 
+   *
    * @return the new Statement.
    */
   public static Statement createStatement() {
@@ -133,7 +133,7 @@ public class Database {
 
   /**
    * executeUpdate performs a SQL update.
-   * 
+   *
    * @param sql
    *          - SQL string defining the update to perform
    * @return number of rows updated or -1 if exception or error occurred
@@ -166,7 +166,7 @@ public class Database {
 
   /**
    * Execute a stored procedure with no parameters and no result (i.e., void).
-   * 
+   *
    * @param procname
    *          is the name of the stored procedure
    * @return true if successful
@@ -239,7 +239,7 @@ public class Database {
 
   /**
    * Return a list of all the table names in the DB.
-   * 
+   *
    * @return a list containing zero or more table names.
    */
   public static Collection<String> getTableNames() {
@@ -264,7 +264,7 @@ public class Database {
 
   /**
    * Test whether or not the input parameter is a valid table name in the DB.
-   * 
+   *
    * @param name
    *          is the name to be confirmed
    * @return true if the table name is valid
@@ -306,7 +306,7 @@ public class Database {
 
   /**
    * Get table columns returns the column labels for a database table.
-   * 
+   *
    * @param tableName
    *          name of the table in the database
    * @return a list of the column labels
@@ -352,7 +352,7 @@ public class Database {
   /**
    * Get table data returns all the rows of a database table with optional sort
    * order.
-   * 
+   *
    * @param tableName
    *          name of the table in the database
    * @param preferredSortOrder
@@ -366,8 +366,8 @@ public class Database {
    *          if greater than zero, count limits the count of records to return.
    *          Count less than or equal to zero is interpreted to mean return all
    *          records.
-   * @return a list of JSONArray objects each of which represents a single row of
-   *         data. Note: numbers and booleans are returned in type, all other
+   * @return a list of JSONArray objects each of which represents a single row
+   *         of data. Note: numbers and booleans are returned in type, all other
    *         types are returned as Strings
    */
   @SuppressWarnings("unchecked")
@@ -440,7 +440,7 @@ public class Database {
 
   /**
    * Return the number of rows in a table.
-   * 
+   *
    * @param table
    *          is the name of the table to check
    * @return record count or zero if no records exist
@@ -471,9 +471,9 @@ public class Database {
   }
 
   /**
-   * Return the total disk space size used by a table including index and toasted
-   * data.
-   * 
+   * Return the total disk space size used by a table including index and
+   * toasted data.
+   *
    * @param table
    *          is the name of the table to check
    * @return size in bytes
@@ -507,7 +507,7 @@ public class Database {
 
   /**
    * Generate a unique ID for a record in a table of the database.
-   * 
+   *
    * @param tableName
    *          the table name
    * @return the unique id
@@ -517,9 +517,9 @@ public class Database {
   }
 
   /**
-   * Return the total disk space size used by the database including all data and
-   * metadata.
-   * 
+   * Return the total disk space size used by the database including all data
+   * and metadata.
+   *
    * @return size in bytes
    */
   public static long getDatabaseSize() {
@@ -548,7 +548,7 @@ public class Database {
   /**
    * executeSQLGroup is a utility function that allows arbitrary SQL commands to
    * be executed.
-   * 
+   *
    * @param cmdList
    *          is the list of SQL commands to execute.
    * @return the number of successfully executed commands i.e., no exception was
@@ -571,7 +571,7 @@ public class Database {
    * creates a new empty local database, loads the schema from the sql file
    * included with this software release, and creates minimum required initial
    * records in the new database.
-   * 
+   *
    * @param dirRoot
    *          is the root directory of this web application
    * @param schemaVersion
@@ -580,7 +580,8 @@ public class Database {
    */
   public static boolean resetDb(final String dirRoot, final int schemaVersion) {
 
-    log.info("Resetting database using '" + dirRoot + "', loading schema version " + schemaVersion);
+    log.info(
+        "Resetting database using '" + dirRoot + "', loading schema version " + schemaVersion);
 
     // Load the schema file
     if (!loadSql(dirRoot, "smrDB", schemaVersion)) {
@@ -608,7 +609,7 @@ public class Database {
   /**
    * defineSPROCS loads into the database the stored procedures for a defined
    * version.
-   * 
+   *
    * @param dirRoot
    *          is the root directory of this web application
    * @param schemaVersion
@@ -626,11 +627,12 @@ public class Database {
 
   /**
    * loadSQL loads a sql file from the standard directory.
-   * 
+   *
    * @param dirRoot
    *          is the root directory of this web application
    * @param basename
-   *          is the base name of the file to load e.g., SterilizDB or SterilizLLC
+   *          is the base name of the file to load e.g., SterilizDB or
+   *          SterilizLLC
    * @param schemaVersion
    *          is the version number to record for the new DB schema
    * @return true if successful
@@ -662,6 +664,8 @@ public class Database {
   }
 
   /**
+   * Read and process a SQL string.
+   *
    * @param dbFilePath
    *          is the path to the schema file.
    * @return list of commands from the file or null if an error occurs while
@@ -764,7 +768,7 @@ public class Database {
 
   /**
    * Return the version of the database server software that is in use.
-   * 
+   *
    * @return the version string or "[unknown]" if unavailable
    */
   public static String getDbVersion() {
@@ -791,7 +795,7 @@ public class Database {
 
   /**
    * Begin a transaction block.
-   * 
+   *
    * @return a Savepoint if successful, null if unsuccessful
    */
   public static final Savepoint beginTransaction() {
@@ -807,7 +811,7 @@ public class Database {
 
   /**
    * Commit a transaction.
-   * 
+   *
    * @return true if successful
    */
   public static final boolean commitTransaction() {
@@ -826,7 +830,7 @@ public class Database {
 
   /**
    * Roll back a transaction.
-   * 
+   *
    * @param savept
    *          is the save point to which to roll back.
    * @return true if successful
@@ -847,12 +851,12 @@ public class Database {
 
   /**
    * escape a string for SQL special characters.
-   * 
+   *
    * @param value
    *          to be escaped
    * @return escaped string suitable for storage in SQL
    */
-  public static String escapeSQL(final String value) {
+  public static String escapeSql(final String value) {
     if (value == null) {
       return null;
     }

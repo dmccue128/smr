@@ -1,6 +1,7 @@
 /**
  * Conversions.java
- * 3 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -13,7 +14,7 @@ public class Conversions {
 
   /**
    * knotsToKph - convert knots to kilometers per hour.
-   * 
+   *
    * @param knots
    *          is the input speed
    * @return the equivalent speed in kilometers per hour
@@ -25,7 +26,7 @@ public class Conversions {
 
   /**
    * knotsToMph - convert knots to miles per hour.
-   * 
+   *
    * @param knots
    *          is the input speed
    * @return the equivalent speed in miles per hour
@@ -37,7 +38,7 @@ public class Conversions {
 
   /**
    * knotsToMps - convert knots to meters per second.
-   * 
+   *
    * @param knots
    *          is the input speed
    * @return the equivalent speed in meters per second
@@ -49,7 +50,7 @@ public class Conversions {
 
   /**
    * mpsToKnots - convert meters per second to knots.
-   * 
+   *
    * @param mps
    *          is the input speed
    * @return the equivalent speed in knots
@@ -61,7 +62,7 @@ public class Conversions {
 
   /**
    * mpsToKph - convert meters per second to kilometers per hour.
-   * 
+   *
    * @param mps
    *          is the input speed
    * @return the equivalent speed in kilometers per hour
@@ -73,7 +74,7 @@ public class Conversions {
 
   /**
    * mpsToMph - convert meters per second to miles per hour.
-   * 
+   *
    * @param mps
    *          is the input speed
    * @return the equivalent speed in miles per hour
@@ -84,12 +85,13 @@ public class Conversions {
   }
 
   /**
-   * Salinity may be measured using an electrical current. The potential of a solution to pass an
-   * electric current is called electrical conductivity (EC) and it is usually measured in
-   * microSiemens per centimetre (µS/cm). This is often expressed simply as an 'EC Unit'. Other
-   * units for measuring salinity are: deciSiemens per metre (dS/m) and Parts Per Million in water
+   * Salinity may be measured using an electrical current. The potential of a
+   * solution to pass an electric current is called electrical conductivity (EC)
+   * and it is usually measured in microSiemens per centimetre (µS/cm). This is
+   * often expressed simply as an 'EC Unit'. Other units for measuring salinity
+   * are: deciSiemens per metre (dS/m) and Parts Per Million in water
    * (mg/litre).
-   * 
+   *
    * @param ecUnits
    *          electrical current in microSiemens per centimeter
    * @return salinity in parts per million
@@ -100,7 +102,7 @@ public class Conversions {
 
   /**
    * One kilowatt hour is 3 600 000 watt seconds.
-   * 
+   *
    * @param kwh
    *          energy in kilowatt hours
    * @return energy in watt-seconds aka joules
@@ -111,12 +113,12 @@ public class Conversions {
 
   /**
    * One kilowatt hour is 3 600 000 watt seconds.
-   * 
+   *
    * @param ws
    *          energy in watt-seconds (aka joules)
    * @return energy in kilowatt hours
    */
-  public static final double wSToKwh(final double ws) {
+  public static final double wsToKwh(final double ws) {
     return ws / 3600000.0d;
   }
 }

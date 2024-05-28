@@ -1,6 +1,7 @@
 /**
  * Navigation.java
- * 1 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -27,28 +28,38 @@ public interface Navigation {
 
   /**
    * Get the route.
-   * 
+   *
    * @return the route.
    */
   Route getRoute();
 
   /**
-   * @return Speed Over Ground in km/h. i.e., Vessel rate of progress in the direction of travel.
+   * Get the speed over ground in km/h.
+   *
+   * @return Speed Over Ground in km/h. i.e., Vessel rate of progress in the
+   *         direction of travel.
    */
-  float getSOG();
+  float getSog();
 
   /**
-   * @return Velocity Made Good in km/h, i.e., Vessel rate of progress towards the next defined
-   *         waypoint.
+   * Get the velocity made good in km/h.
+   *
+   * @return Velocity Made Good in km/h, i.e., Vessel rate of progress towards
+   *         the next defined waypoint.
    */
-  float getVMG();
+  float getVmg();
 
   /**
-   * @return Estimated Distance to Destination in kilometers following the planned route.
+   * Get the estimated distance to destination.
+   *
+   * @return Estimated Distance to Destination in kilometers following the
+   *         planned route.
    */
   float getDtD();
 
   /**
+   * Get the estimated distance to the next waypoint.
+   *
    * @return Estimated Distance to next Waypoint in kilometers.
    */
   float getDtW();

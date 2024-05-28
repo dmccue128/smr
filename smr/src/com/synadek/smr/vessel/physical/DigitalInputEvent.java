@@ -1,6 +1,7 @@
 /**
  * DigitalInputEvent.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -25,7 +26,7 @@ public class DigitalInputEvent {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param dev
    *          the physical device (See VesselPhysicalModel)
    * @param val
@@ -37,6 +38,8 @@ public class DigitalInputEvent {
   }
 
   /**
+   * Get the physical device type.
+   *
    * @return the device
    */
   public final PhysicalDeviceType getDevice() {
@@ -44,6 +47,8 @@ public class DigitalInputEvent {
   }
 
   /**
+   * Get the new value.
+   *
    * @return the newValue
    */
   public final boolean getNewState() {

@@ -1,14 +1,15 @@
 /**
  * WindSpeedSample.java
- * 17 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.control.weather;
 
 /**
- * Each Wind Speed sample contains data necessary to continuously compute average speed and standard
- * deviation.
+ * Each Wind Speed sample contains data necessary to continuously compute
+ * average speed and standard deviation.
  */
 public class WindSpeedSample {
 
@@ -24,7 +25,7 @@ public class WindSpeedSample {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param speedMps
    *          is the speed in meters per second.
    */
@@ -35,7 +36,7 @@ public class WindSpeedSample {
 
   /**
    * Return the speed in meters per second.
-   * 
+   *
    * @return the speed in meters per second
    */
   public double getSpeed() {
@@ -44,7 +45,7 @@ public class WindSpeedSample {
 
   /**
    * Timestamp when the sample was recorded.
-   * 
+   *
    * @return the timestamp in millis since the epoch
    */
   public long getTimestamp() {

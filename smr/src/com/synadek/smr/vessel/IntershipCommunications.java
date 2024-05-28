@@ -1,6 +1,7 @@
 /**
  * IntershipCommunications.java
- * 1 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -14,7 +15,7 @@ import org.json.simple.JSONObject;
 public interface IntershipCommunications extends VesselComponent {
   /**
    * Send a message to another ship.
-   * 
+   *
    * @param shipName
    *          the name of the ship to which to send the communication
    * @param message
@@ -24,7 +25,7 @@ public interface IntershipCommunications extends VesselComponent {
 
   /**
    * Send an image to another ship.
-   * 
+   *
    * @param shipName
    *          the name of the ship to which to send the communication
    * @param metadata
@@ -36,7 +37,7 @@ public interface IntershipCommunications extends VesselComponent {
 
   /**
    * Add a listener for messages coming from off-ship.
-   * 
+   *
    * @param comm
    *          the listener
    */

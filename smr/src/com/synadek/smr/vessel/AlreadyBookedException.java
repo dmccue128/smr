@@ -1,6 +1,7 @@
 /**
  * AlreadyBookedException.java
- * 4 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -30,11 +31,12 @@ public class AlreadyBookedException extends Exception {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param date
    *          the date on which the booking occurs
    * @param previousBooking
-   *          is the name of the mission that previously booked this vessel on the date
+   *          is the name of the mission that previously booked this vessel on
+   *          the date
    */
   public AlreadyBookedException(final Date date, final String previousBooking) {
     previousDate = date;
@@ -42,6 +44,8 @@ public class AlreadyBookedException extends Exception {
   }
 
   /**
+   * Get the previous date.
+   *
    * @return the previousDate
    */
   public final Date getPreviousDate() {
@@ -49,6 +53,8 @@ public class AlreadyBookedException extends Exception {
   }
 
   /**
+   * Get the previous mission.
+   *
    * @return the previousMission
    */
   public final String getPreviousMission() {

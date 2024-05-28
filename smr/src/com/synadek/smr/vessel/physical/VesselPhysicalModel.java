@@ -1,6 +1,7 @@
 /**
  * VesselPhysicalModel.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -32,11 +33,13 @@ public interface VesselPhysicalModel extends Component {
      */
     PHY_ANCHOR_MOTOR_SPEED,
     /**
-     * Anchor sensor - down. True when anchor is deployed to the full extent of the anchor chain.
+     * Anchor sensor - down. True when anchor is deployed to the full extent of
+     * the anchor chain.
      */
     PHY_ANCHOR_SENSOR_DOWN,
     /**
-     * Anchor sensor - up. True when the anchor is fully retracted into the ship.
+     * Anchor sensor - up. True when the anchor is fully retracted into the
+     * ship.
      */
     PHY_ANCHOR_SENSOR_UP,
     /**
@@ -90,8 +93,8 @@ public interface VesselPhysicalModel extends Component {
   }
 
   /**
-   * Define possible modes (uses for) a device. "SYSTEM_TYPE" means unusable for software e.g.,
-   * power and ground pins.
+   * Define possible modes (uses for) a device. "SYSTEM_TYPE" means unusable for
+   * software e.g., power and ground pins.
    */
   public enum PinType {
     /**
@@ -122,7 +125,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Get the type of a physical device.
-   * 
+   *
    * @param dev
    *          the device
    * @return the type
@@ -131,7 +134,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Get the state of a digital input.
-   * 
+   *
    * @param deviceId
    *          the id of the digital input
    * @return the state of the digital input
@@ -141,9 +144,9 @@ public interface VesselPhysicalModel extends Component {
   boolean getDigitalInputState(PhysicalDeviceType deviceId) throws ComponentException;
 
   /**
-   * Set the state of a simulated digital input. This method is only valid when the interface is
-   * being simulated.
-   * 
+   * Set the state of a simulated digital input. This method is only valid when
+   * the interface is being simulated.
+   *
    * @param deviceId
    *          the id of the digital input
    * @param newVal
@@ -151,12 +154,11 @@ public interface VesselPhysicalModel extends Component {
    * @throws ComponentException
    *           if underlying device is not connected or not simulated
    */
-  void setDigitalInputState(PhysicalDeviceType deviceId, boolean newVal)
-      throws ComponentException;
+  void setDigitalInputState(PhysicalDeviceType deviceId, boolean newVal) throws ComponentException;
 
   /**
    * Get the state of a digital output.
-   * 
+   *
    * @param deviceId
    *          the id of the digital output
    * @return the state of the digital output
@@ -167,7 +169,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Set the state of a digital output.
-   * 
+   *
    * @param deviceId
    *          the id of the digital output
    * @param newVal
@@ -180,7 +182,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Get the value of an analog input.
-   * 
+   *
    * @param deviceId
    *          the id of the analog input
    * @return the value of the analog input
@@ -190,10 +192,11 @@ public interface VesselPhysicalModel extends Component {
   double getAnalogInputValue(PhysicalDeviceType deviceId) throws ComponentException;
 
   /**
-   * Add a digital input change listener. The input change handler method will be called when an
-   * input on this Interface Kit has changed. There is no limit on the number of input change
-   * handlers that can be registered for a particular VesselPhysicalModel.
-   * 
+   * Add a digital input change listener. The input change handler method will
+   * be called when an input on this Interface Kit has changed. There is no
+   * limit on the number of input change handlers that can be registered for a
+   * particular VesselPhysicalModel.
+   *
    * @param deviceId
    *          the id of the digital input
    * @param l
@@ -206,7 +209,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Remove a digital input change listener from all GPIO pins.
-   * 
+   *
    * @param l
    *          the listener
    * @throws ComponentException
@@ -215,11 +218,11 @@ public interface VesselPhysicalModel extends Component {
   void removeDigitalInputListener(PdlDigitalHandler l) throws ComponentException;
 
   /**
-   * Add a digital output change listener for digital outputs on this device. The output change
-   * handler method will be called when an input on this Interface Kit has changed. There is no
-   * limit on the number of output change handlers that can be registered for a particular
-   * VesselPhysicalModel.
-   * 
+   * Add a digital output change listener for digital outputs on this device.
+   * The output change handler method will be called when an input on this
+   * Interface Kit has changed. There is no limit on the number of output change
+   * handlers that can be registered for a particular VesselPhysicalModel.
+   *
    * @param deviceId
    *          the id of the digital output
    * @param l
@@ -232,7 +235,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Remove a digital output change listener from all GPIO pins.
-   * 
+   *
    * @param l
    *          the listener
    * @throws ComponentException
@@ -241,11 +244,12 @@ public interface VesselPhysicalModel extends Component {
   void removeDigitalOutputListener(PdlDigitalHandler l) throws ComponentException;
 
   /**
-   * Add an analog sensor change listener. The sensor change handler method will be called when a
-   * sensor on this Interface Kit has changed by at least the trigger amount (see
-   * SetAnalogChangeTrigger) that has been set for this sensor. There is no limit on the number of
-   * sensor change handlers that can be registered for a particular VesselPhysicalModel.
-   * 
+   * Add an analog sensor change listener. The sensor change handler method will
+   * be called when a sensor on this Interface Kit has changed by at least the
+   * trigger amount (see SetAnalogChangeTrigger) that has been set for this
+   * sensor. There is no limit on the number of sensor change handlers that can
+   * be registered for a particular VesselPhysicalModel.
+   *
    * @param deviceId
    *          id of the analog input
    * @param l
@@ -258,7 +262,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Remove an analog sensor change listener from all GPIO pins.
-   * 
+   *
    * @param l
    *          the listener
    * @throws ComponentException
@@ -267,34 +271,37 @@ public interface VesselPhysicalModel extends Component {
   void removeAnalogInputListener(PdlAnalogHandler l) throws ComponentException;
 
   /**
-   * Get the change trigger for an analog input. This is the amount that an analog input must change
-   * between successive SensorChangeEvents. This is based on the 0-1000 range provided by
-   * getSensorValue. This value is by default set to 10 for most Interface Kits with analog inputs.
-   * 
+   * Get the change trigger for an analog input. This is the amount that an
+   * analog input must change between successive SensorChangeEvents. This is
+   * based on the 0-1000 range provided by getSensorValue. This value is by
+   * default set to 10 for most Interface Kits with analog inputs.
+   *
    * @param deviceId
    *          the id of the analog input
    * @return the value of the change trigger
    * @throws ComponentException
-   *           if underlying device is not connected or does not support the operation
+   *           if underlying device is not connected or does not support the
+   *           operation
    */
   double getAnalogChangeTrigger(PhysicalDeviceType deviceId) throws ComponentException;
 
   /**
    * Set the change trigger for an analog input.
-   * 
+   *
    * @param deviceId
    *          the id of the analog input
    * @param newVal
    *          the trigger amount
    * @throws ComponentException
-   *           if underlying device is not connected or does not support the operation
+   *           if underlying device is not connected or does not support the
+   *           operation
    */
   void setAnalogChangeTrigger(PhysicalDeviceType deviceId, double newVal)
       throws ComponentException;
 
   /**
    * Get a resource key for the name of a physical device.
-   * 
+   *
    * @param deviceId
    *          the id of the physical device
    * @return a resource key suitable for accessing the name of this device
@@ -308,7 +315,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Iterate over the Pdms of the specified type.
-   * 
+   *
    * @param type
    *          the subset of PDMs of interest
    * @return an iterator that yields all the PDMs of that type
@@ -317,7 +324,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Invoke registered handlers for analog input events.
-   * 
+   *
    * @param ae
    *          the event to dispatch
    */
@@ -325,7 +332,7 @@ public interface VesselPhysicalModel extends Component {
 
   /**
    * Invoke registered handlers for digital input events.
-   * 
+   *
    * @param evt
    *          the event to dispatch
    */

@@ -1,13 +1,13 @@
 /**
  * SystemConfiguration.java
- * 3 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.dsl;
 
 import com.synadek.smr.database.Database;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.ResultSet;
@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,8 +33,8 @@ public final class SystemConfiguration {
   /**
    * Acquire a reference to the application logger.
    */
-  private static Logger log =
-      LogManager.getLogger(SystemConfiguration.class.getPackage().getName());
+  private static Logger log = LogManager
+      .getLogger(SystemConfiguration.class.getPackage().getName());
 
   /**
    * maximum length of a key string.
@@ -60,7 +59,7 @@ public final class SystemConfiguration {
 
   /**
    * getElementNames returns the names of all the defined elements.
-   * 
+   *
    * @return set of names
    */
   public static Set<String> getElementNames() {
@@ -85,7 +84,7 @@ public final class SystemConfiguration {
 
   /**
    * Retrieve the string representation of the value of a configuration element.
-   * 
+   *
    * @param key
    *          is the name
    * @return the value as a string
@@ -102,8 +101,7 @@ public final class SystemConfiguration {
     }
 
     // Define the SQL query to retrieve the element value
-    final String query =
-        "SELECT elementvalue FROM Configuration WHERE elementname='" + key + "'";
+    final String query = "SELECT elementvalue FROM Configuration WHERE elementname='" + key + "'";
     String answer = null;
     boolean error = false;
 
@@ -133,7 +131,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience function to get a string element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @return the integer or null if an error occurs.
@@ -146,7 +144,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience function to get an integer element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @return the integer or -1 if a conversion error occurs.
@@ -172,7 +170,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience function to get an long element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @return the long value or -1 if a conversion error occurs.
@@ -198,15 +196,14 @@ public final class SystemConfiguration {
 
   /**
    * Convenience function to get a boolean element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @return the value or false if an error occurs.
    * @throws NoSuchElementException
    *           if the key does not name a known system configuration element
    */
-  public static boolean getBooleanElement(final String key)
-      throws NoSuchElementException {
+  public static boolean getBooleanElement(final String key) throws NoSuchElementException {
     // Get value from system configuration
     try {
       final String dbvalue = SystemConfiguration.getOneElement(key);
@@ -225,7 +222,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience function to get a double element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @return the value or -1.0d if an error occurs.
@@ -252,7 +249,7 @@ public final class SystemConfiguration {
 
   /**
    * Update the value of a configuration element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @param value
@@ -268,8 +265,8 @@ public final class SystemConfiguration {
     }
 
     if (key.length() > MAX_KEY_SIZE) {
-      log.error("Error updating configuration element " + key
-          + ": key exceeds maximum size of " + MAX_KEY_SIZE);
+      log.error("Error updating configuration element " + key + ": key exceeds maximum size of "
+          + MAX_KEY_SIZE);
       return false;
     }
 
@@ -280,9 +277,8 @@ public final class SystemConfiguration {
     }
 
     // Update the value in the database
-    final String query =
-        "UPDATE configuration SET elementvalue='" + Database.escapeSQL(value)
-            + "' WHERE elementname='" + Database.escapeSQL(key) + "'";
+    final String query = "UPDATE configuration SET elementvalue='" + Database.escapeSql(value)
+        + "' WHERE elementname='" + Database.escapeSql(key) + "'";
 
     if (Database.executeUpdate(query) < 1) {
       log.warn("Error updating element " + key + ". Creating this element now...");
@@ -299,7 +295,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience method to set a boolean element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @param value
@@ -311,7 +307,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience method to set an integer element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @param value
@@ -323,7 +319,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience method to set a long element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @param value
@@ -335,7 +331,7 @@ public final class SystemConfiguration {
 
   /**
    * Convenience method to set a double element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @param value
@@ -347,7 +343,7 @@ public final class SystemConfiguration {
 
   /**
    * Create a new configuration element.
-   * 
+   *
    * @param key
    *          is the name of the element
    * @param value
@@ -363,8 +359,8 @@ public final class SystemConfiguration {
     }
 
     if (key.length() > MAX_KEY_SIZE) {
-      log.error("Error creating configuration element " + key
-          + ": key exceeds maximum size of " + MAX_KEY_SIZE);
+      log.error("Error creating configuration element " + key + ": key exceeds maximum size of "
+          + MAX_KEY_SIZE);
       return false;
     }
 
@@ -377,8 +373,8 @@ public final class SystemConfiguration {
     log.debug("Updating system configuration element " + key + " to " + value);
 
     // Update the value in the database
-    final String query = "INSERT INTO configuration(elementname,elementvalue) VALUES('"
-        + key + "','" + value + "')";
+    final String query = "INSERT INTO configuration(elementname,elementvalue) VALUES('" + key
+        + "','" + value + "')";
 
     if (Database.executeUpdate(query) < 1) {
       log.error("Error creating element " + key);
@@ -390,7 +386,7 @@ public final class SystemConfiguration {
 
   /**
    * Return all configuration elements in a string (in Properties format).
-   * 
+   *
    * @return the configuration elements
    */
   public static String fmtString() {
@@ -411,7 +407,7 @@ public final class SystemConfiguration {
 
   /**
    * Return all the configuration elements in XML format.
-   * 
+   *
    * @return the configuration elements
    */
   public static String fmtXml() {
@@ -447,7 +443,7 @@ public final class SystemConfiguration {
 
   /**
    * Return all the configuration elements in JSON format.
-   * 
+   *
    * @return the configuration elements
    */
   @SuppressWarnings("unchecked")
@@ -475,8 +471,9 @@ public final class SystemConfiguration {
   }
 
   /**
-   * Parse and update configuration elements from a string (in Properties format).
-   * 
+   * Parse and update configuration elements from a string (in Properties
+   * format).
+   *
    * @param props
    *          is the string containing element updates in Java Properties format
    */
@@ -502,7 +499,7 @@ public final class SystemConfiguration {
 
   /**
    * Parse and update configuration elements from a string (in XML format).
-   * 
+   *
    * @param xml
    *          is the string containing element updates in xml format
    */
@@ -512,7 +509,7 @@ public final class SystemConfiguration {
 
   /**
    * Parse and update configuration elements from a string (in JSON format).
-   * 
+   *
    * @param json
    *          is the string containing element updates in JSON format
    */

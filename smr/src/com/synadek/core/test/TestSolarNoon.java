@@ -7,12 +7,9 @@
 package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
-
 import com.synadek.core.InvalidValueException;
 import com.synadek.core.Solar;
-
 import java.time.LocalTime;
-
 import org.junit.Test;
 
 /**
@@ -22,14 +19,14 @@ public class TestSolarNoon {
 
   /**
    * Test basic calculation of solar noon from a fixed, valid input.
-   * 
+   *
    * @throws InvalidValueException
    *           if date/time is invalid
    */
   @Test
   public void testHappyPath() throws InvalidValueException {
-    final LocalTime solarNoon =
-        Solar.getSolarNoon(TestSolar.testLongitude, TestSolar.testDateTime);
+    final LocalTime solarNoon = Solar.getSolarNoon(TestSolar.testLongitude,
+        TestSolar.testDateTime);
     int expectedHour = 11;
     int expectedMinute = 52;
     int expectedSecond = 14;
@@ -40,8 +37,9 @@ public class TestSolarNoon {
   }
 
   /**
-   * Test boundary condition in which an invalid (negative) longitude is provided.
-   * 
+   * Test boundary condition in which an invalid (negative) longitude is
+   * provided.
+   *
    * @throws InvalidValueException
    *           if latitude, longitude, or date/time is invalid
    */
@@ -52,8 +50,9 @@ public class TestSolarNoon {
   }
 
   /**
-   * Test boundary condition in which an invalid (excessively large) longitude is provided.
-   * 
+   * Test boundary condition in which an invalid (excessively large) longitude
+   * is provided.
+   *
    * @throws InvalidValueException
    *           if latitude, longitude, or date/time is invalid
    */
@@ -65,7 +64,7 @@ public class TestSolarNoon {
 
   /**
    * Test boundary condition in which a null date/time parameter is provided.
-   * 
+   *
    * @throws InvalidValueException
    *           if input is null
    */

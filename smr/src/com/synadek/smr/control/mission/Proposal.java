@@ -1,13 +1,15 @@
 /**
  * Proposal.java
- * 1 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.control.mission;
 
 /**
- * A contract response, completing the contract terms and conditions with the offer parameters.
+ * A contract response, completing the contract terms and conditions with the
+ * offer parameters.
  */
 public class Proposal {
 
@@ -18,7 +20,7 @@ public class Proposal {
 
   /**
    * Generate a bid in response to an RFP.
-   * 
+   *
    * @param rfp
    *          the contract request for proposals.
    */

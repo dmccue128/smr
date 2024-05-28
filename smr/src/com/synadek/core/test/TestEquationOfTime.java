@@ -7,10 +7,8 @@
 package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
-
 import com.synadek.core.InvalidValueException;
 import com.synadek.core.Solar;
-
 import org.junit.Test;
 
 /**
@@ -20,7 +18,7 @@ public class TestEquationOfTime {
 
   /**
    * Test basic Solar Equation of Time calculation from a fixed, valid input.
-   * 
+   *
    * @throws InvalidValueException
    *           if date/time is invalid
    */
@@ -37,14 +35,14 @@ public class TestEquationOfTime {
 
   /**
    * Test boundary condition in which a null input parameter is provided.
-   * 
-   * @throws InvalidValueException
+   *
+   * @throws IllegalArgumentException
+   *           if a null input parameter is provided
    */
   @Test(expected = NullPointerException.class)
   public void testNullInput() throws InvalidValueException {
     double eqOfTime = Solar.getEquationOfTime(null);
-    System.out
-        .println("Did not expect a value for Equation Of Time, but got: " + eqOfTime);
+    System.out.println("Did not expect a value for Equation Of Time, but got: " + eqOfTime);
   }
 
 }

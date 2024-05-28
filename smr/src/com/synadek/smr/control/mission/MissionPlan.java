@@ -1,15 +1,15 @@
 /**
  * MissionPlan.java
- * 19 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.control.mission;
 
-import com.synadek.core.GPSCoordinates;
+import com.synadek.core.GpsCoordinates;
 import com.synadek.smr.control.navigation.Route;
 import com.synadek.smr.crew.CrewMember;
-
 import java.util.Calendar;
 import java.util.Set;
 
@@ -65,7 +65,8 @@ public class MissionPlan {
    */
   private long plannedStart;
   /**
-   * Date/time when the mission actually started or zero if the mission has not started yet.
+   * Date/time when the mission actually started or zero if the mission has not
+   * started yet.
    */
   private long actualStart;
   /**
@@ -73,17 +74,18 @@ public class MissionPlan {
    */
   private long plannedFinish;
   /**
-   * Date/time when the mission actually ended or zero if the mission has not ended yet.
+   * Date/time when the mission actually ended or zero if the mission has not
+   * ended yet.
    */
   private long actualFinish;
   /**
    * Location of departure.
    */
-  private GPSCoordinates startLocation;
+  private GpsCoordinates startLocation;
   /**
    * Location of destination.
    */
-  private GPSCoordinates finishLocation;
+  private GpsCoordinates finishLocation;
   /**
    * Crew members required for the mission.
    */
@@ -95,7 +97,7 @@ public class MissionPlan {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param missionName
    *          the name of this mission
    */
@@ -115,6 +117,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get the mission plan ID.
+   *
    * @return the id
    */
   public String getId() {
@@ -122,6 +126,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get status.
+   *
    * @return the status
    */
   public MissionStatus getStatus() {
@@ -129,6 +135,8 @@ public class MissionPlan {
   }
 
   /**
+   * Set status.
+   *
    * @param status
    *          the status to set
    */
@@ -137,6 +145,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get mission start time.
+   *
    * @return the actualStart
    */
   public long getActualStart() {
@@ -144,6 +154,8 @@ public class MissionPlan {
   }
 
   /**
+   * Set mission start time.
+   *
    * @param actualStart
    *          the actualStart to set
    */
@@ -152,6 +164,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get mission finish time.
+   *
    * @return the actualFinish
    */
   public long getActualFinish() {
@@ -159,6 +173,8 @@ public class MissionPlan {
   }
 
   /**
+   * Set mission finish time.
+   *
    * @param actualFinish
    *          the actualFinish to set
    */
@@ -167,6 +183,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get mission route.
+   *
    * @return the route
    */
   public Route getRoute() {
@@ -174,6 +192,8 @@ public class MissionPlan {
   }
 
   /**
+   * Set mission route.
+   *
    * @param route
    *          the route to set
    */
@@ -182,6 +202,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get mission description.
+   *
    * @return the description
    */
   public String getDescription() {
@@ -190,7 +212,7 @@ public class MissionPlan {
 
   /**
    * Set/update the description of the mission.
-   * 
+   *
    * @param desc
    *          the description
    */
@@ -199,6 +221,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get planned start time.
+   *
    * @return the plannedStart
    */
   public long getPlannedStart() {
@@ -206,8 +230,8 @@ public class MissionPlan {
   }
 
   /**
-   * Set/update planned start date/time.
-   * 
+   * Set planned start time. Set/update planned start date/time.
+   *
    * @param start
    *          the planned start date/time
    */
@@ -216,6 +240,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get planned finish time.
+   *
    * @return the plannedFinish
    */
   public long getPlannedFinish() {
@@ -224,7 +250,7 @@ public class MissionPlan {
 
   /**
    * Set/update the planned finish date/time.
-   * 
+   *
    * @param finish
    *          the planned finish date/time.
    */
@@ -234,43 +260,45 @@ public class MissionPlan {
 
   /**
    * Get the starting location (departure).
-   * 
+   *
    * @return the location
    */
-  public GPSCoordinates getStartLocation() {
+  public GpsCoordinates getStartLocation() {
     return startLocation;
   }
 
   /**
    * Set/update the starting location (departure).
-   * 
+   *
    * @param loc
    *          the staring location
    */
-  public void setStartLocation(final GPSCoordinates loc) {
+  public void setStartLocation(final GpsCoordinates loc) {
     startLocation = loc;
   }
 
   /**
    * Get the finish location (destination).
-   * 
+   *
    * @return the location
    */
-  public GPSCoordinates getFinishLocation() {
+  public GpsCoordinates getFinishLocation() {
     return finishLocation;
   }
 
   /**
    * Set/update the finish location (destination).
-   * 
+   *
    * @param loc
    *          the finish location
    */
-  public void setFinishLocation(final GPSCoordinates loc) {
+  public void setFinishLocation(final GpsCoordinates loc) {
     finishLocation = loc;
   }
 
   /**
+   * Get the crew list.
+   *
    * @return the crewList
    */
   public Set<CrewMember> getCrewList() {
@@ -279,7 +307,7 @@ public class MissionPlan {
 
   /**
    * Set/update the crew list.
-   * 
+   *
    * @param crew
    *          the list of crew members
    */
@@ -288,6 +316,8 @@ public class MissionPlan {
   }
 
   /**
+   * Get the name of the mission.
+   *
    * @return the name
    */
   public String getName() {
@@ -295,6 +325,8 @@ public class MissionPlan {
   }
 
   /**
+   * Set the name of the mission.
+   *
    * @param name
    *          the name to set
    */

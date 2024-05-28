@@ -1,6 +1,7 @@
 /**
  * PdmIterator.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -8,7 +9,6 @@ package com.synadek.smr.vessel.physical;
 
 import com.synadek.smr.vessel.physical.VesselPhysicalModel.PhysicalDeviceType;
 import com.synadek.smr.vessel.physical.VesselPhysicalModel.PinType;
-
 import java.util.Iterator;
 
 /**
@@ -35,7 +35,7 @@ public class PdmIterator implements Iterator<PhysicalDeviceType> {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param mdl
    *          the Pio model supporting this device
    * @param filter

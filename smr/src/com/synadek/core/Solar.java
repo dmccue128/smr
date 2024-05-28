@@ -1,21 +1,8 @@
 /**
  * Solar.java
- * 10 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
- * 
- * Copyright 2017 Daniel McCue
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- *      
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 package com.synadek.core;
@@ -25,7 +12,6 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -54,10 +40,10 @@ public class Solar {
   }
 
   /**
-   * Utility method to assess whether a value is in the valid range of a latitude.
-   * Latitude here is in decimal degrees from 90.0 (the North Pole) to -90.0 (the
-   * South Pole). The equator is at latitude 0.0.
-   * 
+   * Utility method to assess whether a value is in the valid range of a
+   * latitude. Latitude here is in decimal degrees from 90.0 (the North Pole) to
+   * -90.0 (the South Pole). The equator is at latitude 0.0.
+   *
    * @param val
    *          the value
    * @throws IllegalArgumentException
@@ -69,10 +55,10 @@ public class Solar {
 
   /**
    * Utility method to assess whether a value is in the valid range of a
-   * longitude. Longitude here is in decimal degrees from -180.0 westward from the
-   * Prime Meridian to +180.0 eastward. The Prime Meridian (passing through
+   * longitude. Longitude here is in decimal degrees from -180.0 westward from
+   * the Prime Meridian to +180.0 eastward. The Prime Meridian (passing through
    * Greenwich, England) is at Longitude 0.0
-   * 
+   *
    * @param val
    *          the value
    * @throws IllegalArgumentException
@@ -85,7 +71,7 @@ public class Solar {
   /**
    * Utility method to assess whether a value is in the valid range of date/time
    * supported by this library.
-   * 
+   *
    * @param val
    *          the value
    * @throws NullPointerException
@@ -95,14 +81,16 @@ public class Solar {
    */
   private static void validateDateTime(final OffsetDateTime val) {
     Validate.notNull(val);
-    Validate.isTrue(val.getYear() >= 1900,
-        "Dates prior to January 1, 1900 are not supported by this library. The date %s is not supported",
-        val.format(DateTimeFormatter.RFC_1123_DATE_TIME));
+    Validate
+        .isTrue(val.getYear() >= 1900,
+            "Dates prior to January 1, 1900 are not supported by this library. "
+                + "The date %s is not supported",
+            val.format(DateTimeFormatter.RFC_1123_DATE_TIME));
   }
 
   /**
    * Convert a date and time to a Julian date.
-   * 
+   *
    * @param datetime
    *          the date and time with offset from UTC
    * @return the Julian date rounded to six decimal places
@@ -123,7 +111,7 @@ public class Solar {
 
   /**
    * Convert a Julian day to Julian century.
-   * 
+   *
    * @param julianDay
    *          the day
    * @return the same date as a Julian century
@@ -134,20 +122,20 @@ public class Solar {
 
   /**
    * Compute the geocentric mean longitude of the sun.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the geometric mean (degrees)
    */
   private static double getGeoMeanLongSun(final double julianCentury) {
-    double geoMeanLongSun =
-        (280.46646 + julianCentury * (36000.76983 + julianCentury * 0.0003032)) % 360.0;
+    double geoMeanLongSun = (280.46646 + julianCentury * (36000.76983 + julianCentury * 0.0003032))
+        % 360.0;
     return geoMeanLongSun;
   }
 
   /**
    * Compute the geocentric mean anomaly of the sun.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the mean anomaly (degrees)
@@ -159,20 +147,20 @@ public class Solar {
 
   /**
    * Compute the eccentricity of earth's orbit.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the eccentricity of earth's orbit
    */
   private static double getEccentEarthOrbit(final double julianCentury) {
-    double eccentEarthOrbit =
-        0.016708634 - julianCentury * (0.000042037 + 0.0000001267 * julianCentury);
+    double eccentEarthOrbit = 0.016708634
+        - julianCentury * (0.000042037 + 0.0000001267 * julianCentury);
     return eccentEarthOrbit;
   }
 
   /**
    * Compute the equation of the center of the sun.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the equation of the center
@@ -188,7 +176,7 @@ public class Solar {
 
   /**
    * Compute the true longitude of the sun.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the longitude (degrees)
@@ -199,20 +187,19 @@ public class Solar {
 
   /**
    * Compute the true anomoly of the sun.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the anomaly (degrees)
    */
-  // Not actually used in any of these calculations, this method commented out
-  // private static double getSunTrueAnom(final double julianCentury) {
-  // return getGeoMeanAnomSun(julianCentury) + getSunEqOfCtr(julianCentury);
-  // }
+  public static double getSunTrueAnom(final double julianCentury) {
+    return getGeoMeanAnomSun(julianCentury) + getSunEqOfCtr(julianCentury);
+  }
 
   /**
    * Compute the apparent longitude of the sun, accounting for atmospheric
    * refraction.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the apparent longitude (degrees)
@@ -225,7 +212,7 @@ public class Solar {
 
   /**
    * Compute mean Oblique Ecliptic.
-   * 
+   *
    * @param julianCentury
    *          time as julian century
    * @return the oblique ecliptic (degrees)
@@ -239,7 +226,7 @@ public class Solar {
 
   /**
    * Compute the oblique correction for the sun (degrees).
-   * 
+   *
    * @param julianCentury
    *          time as julian century
    * @return oblique correction (degrees)
@@ -252,7 +239,7 @@ public class Solar {
 
   /**
    * Compute the variance.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the variance
@@ -266,7 +253,7 @@ public class Solar {
 
   /**
    * Compute the equation of time for the sun.
-   * 
+   *
    * @param julianCentury
    *          the date
    * @return the equation of time (minutes)
@@ -289,7 +276,7 @@ public class Solar {
 
   /**
    * Compute the equation of time for the sun.
-   * 
+   *
    * @param datetime
    *          the date and time with offset from UTC
    * @return the equation of time (minutes)
@@ -311,7 +298,7 @@ public class Solar {
 
   /**
    * Compute the hour angle at sunrise.
-   * 
+   *
    * @param lat
    *          the latitude (degrees)
    * @param julianCentury
@@ -321,15 +308,15 @@ public class Solar {
   private static double getHaSunrise(final double lat, final double julianCentury) {
     double sunDeclinRadians = Math.toRadians(getSolarDeclination(julianCentury));
     double latRadians = Math.toRadians(lat);
-    double haSunrise = Math.toDegrees(Math
-        .acos(Math.cos(Math.toRadians(90.833)) / (Math.cos(latRadians) * Math.cos(sunDeclinRadians))
+    double haSunrise = Math.toDegrees(Math.acos(
+        Math.cos(Math.toRadians(90.833)) / (Math.cos(latRadians) * Math.cos(sunDeclinRadians))
             - Math.tan(latRadians) * Math.tan(sunDeclinRadians)));
     return haSunrise;
   }
 
   /**
    * Compute solar noon given a longitude and time.
-   * 
+   *
    * @param lon
    *          the longitude
    * @param zone
@@ -340,12 +327,13 @@ public class Solar {
    */
   private static double getSolarNoon(final double lon, final double zone,
       final double julianCentury) {
-    return (720 - (4.0 * lon) - getEquationOfTime(julianCentury) + (zone * 60.0)) / MINUTES_PER_DAY;
+    return (720 - (4.0 * lon) - getEquationOfTime(julianCentury) + (zone * 60.0))
+        / MINUTES_PER_DAY;
   }
 
   /**
    * Compute solar noon given a longitude and time.
-   * 
+   *
    * @param lon
    *          the longitude
    * @param dateTime
@@ -374,12 +362,12 @@ public class Solar {
 
   /**
    * Compute the time of sunrise from a location and time.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
    *          the longitude
-   * @param datetime
+   * @param dateTime
    *          the date and time with offset from UTC the date
    * @return the local time of sunrise
    * @throws IllegalArgumentException
@@ -408,12 +396,12 @@ public class Solar {
 
   /**
    * Compute the time of sunset from a location and time.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
    *          the longitude
-   * @param datetime
+   * @param dateTime
    *          the date and time with offset from UTC
    * @return the local time of sunset
    * @throws IllegalArgumentException
@@ -443,15 +431,15 @@ public class Solar {
 
   /**
    * Compute the duration of sunlight given a latitude and a date.
-   * 
+   *
    * @param lat
    *          the latitude
-   * @param datetime
+   * @param dateTime
    *          the date and time with offset from UTC
    * @return the duration of sunlight (minutes)
    * @throws IllegalArgumentException
-   *           if latitude is invalid or date/time represents a date not supported
-   *           by this library i.e. before 1900
+   *           if latitude is invalid or date/time represents a date not
+   *           supported by this library i.e. before 1900
    * @throws NullPointerException
    *           if date/time is null
    */
@@ -470,7 +458,7 @@ public class Solar {
 
   /**
    * Compute the true solar time.
-   * 
+   *
    * @param lon
    *          the longitude
    * @param zone
@@ -483,14 +471,14 @@ public class Solar {
    */
   private static double getTrueSolarTime(final double lon, final double zone,
       final int minutesPastMidnight, final double julianCentury) {
-    double trueSolarTimeSubtotal =
-        (minutesPastMidnight + getEquationOfTime(julianCentury) + (4.0 * lon) - (60.0 * zone));
+    double trueSolarTimeSubtotal = (minutesPastMidnight + getEquationOfTime(julianCentury)
+        + (4.0 * lon) - (60.0 * zone));
     return (trueSolarTimeSubtotal + MINUTES_PER_DAY) % MINUTES_PER_DAY;
   }
 
   /**
    * Compute the hour angle of the sun.
-   * 
+   *
    * @param lon
    *          the longitude
    * @param zone
@@ -509,21 +497,21 @@ public class Solar {
 
   /**
    * Compute the declination of the sun.
-   * 
+   *
    * @param julianCentury
    *          time as julian century
    * @return the declination (degrees)
    */
   private static double getSolarDeclination(final double julianCentury) {
-    double sunDeclin =
-        Math.toDegrees(Math.asin(Math.sin(Math.toRadians(getObliqueCorr(julianCentury)))
+    double sunDeclin = Math
+        .toDegrees(Math.asin(Math.sin(Math.toRadians(getObliqueCorr(julianCentury)))
             * Math.sin(Math.toRadians(getSunAppLong(julianCentury)))));
     return sunDeclin;
   }
 
   /**
    * Compute the declination of the sun.
-   * 
+   *
    * @param dateTime
    *          the date and time with offset from UTC
    * @return the declination (degrees)
@@ -545,7 +533,7 @@ public class Solar {
 
   /**
    * Compute the solar zenith angle (degrees).
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -562,17 +550,17 @@ public class Solar {
       final int minutesPastMidnight, final double julianCentury) {
     double sunDeclinRadians = Math.toRadians(getSolarDeclination(julianCentury));
     double latRadians = Math.toRadians(lat);
-    double hourAngleRadians =
-        Math.toRadians(getHourAngle(lon, zone, minutesPastMidnight, julianCentury));
-    double solarZenithAngle =
-        Math.toDegrees(Math.acos(Math.sin(latRadians) * Math.sin(sunDeclinRadians)
+    double hourAngleRadians = Math
+        .toRadians(getHourAngle(lon, zone, minutesPastMidnight, julianCentury));
+    double solarZenithAngle = Math
+        .toDegrees(Math.acos(Math.sin(latRadians) * Math.sin(sunDeclinRadians)
             + Math.cos(latRadians) * Math.cos(sunDeclinRadians) * Math.cos(hourAngleRadians)));
     return solarZenithAngle;
   }
 
   /**
    * Compute the solar elevation angle.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -592,7 +580,7 @@ public class Solar {
 
   /**
    * Compute the solar elevation angle.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -624,7 +612,7 @@ public class Solar {
 
   /**
    * Compute approximate atmospheric refraction.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -640,8 +628,8 @@ public class Solar {
   private static double getApproxAtmosphericRefraction(final double lat, final double lon,
       final double zone, final int minutesPastMidnight, final double julianCentury) {
 
-    double solarElevationAngle =
-        getSolarElevation(lat, lon, zone, minutesPastMidnight, julianCentury);
+    double solarElevationAngle = getSolarElevation(lat, lon, zone, minutesPastMidnight,
+        julianCentury);
     double approxAtmosphericRefraction = 0.0;
 
     if (solarElevationAngle > 85.0) {
@@ -664,7 +652,7 @@ public class Solar {
 
   /**
    * Compute solar elevation corrected for atmospheric refraction.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -685,7 +673,7 @@ public class Solar {
 
   /**
    * Compute the solar elevation angle.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -717,7 +705,7 @@ public class Solar {
 
   /**
    * Compute the solar azimuth angle (degrees).
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -733,8 +721,8 @@ public class Solar {
   private static double getSolarAzimuth(final double lat, final double lon, final double zone,
       final int minutesPastMidnight, final double julianCentury) {
 
-    double solarZenithAngleDegrees =
-        getSolarZenithAngle(lat, lon, zone, minutesPastMidnight, julianCentury);
+    double solarZenithAngleDegrees = getSolarZenithAngle(lat, lon, zone, minutesPastMidnight,
+        julianCentury);
     double solarZenithAngleRadians = Math.toRadians(solarZenithAngleDegrees);
 
     double latRadians = Math.toRadians(lat);
@@ -759,7 +747,7 @@ public class Solar {
 
   /**
    * Get solar azimuth.
-   * 
+   *
    * @param lat
    *          the latitude
    * @param lon
@@ -767,8 +755,8 @@ public class Solar {
    * @param dateTime
    *          the date and time with offset from UTC
    * @throws IllegalArgumentException
-   *           if latitude or longitude is invalid or date/time represents a date
-   *           not supported by this library i.e. before 1900
+   *           if latitude or longitude is invalid or date/time represents a
+   *           date not supported by this library i.e. before 1900
    * @throws NullPointerException
    *           if date/time is null
    */

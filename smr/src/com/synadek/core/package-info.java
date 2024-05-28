@@ -1,10 +1,7 @@
 /**
- * package-info.java
- * 16 Mar 2017
+ * package-info.java 28 May 2024
+ *
  * @author Daniel McCue
- */
-/**
- * Core classes.
  */
 
 package com.synadek.core;

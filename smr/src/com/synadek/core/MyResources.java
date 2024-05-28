@@ -1,12 +1,8 @@
 /**
  * MyResources.java
- * 3 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
- */
-/**
- * MyResources.java
- * 
- * @author Daniel McCue 15 May 2011
  */
 
 package com.synadek.core;
@@ -26,7 +22,7 @@ public class MyResources extends ListResourceBundle {
 
   /**
    * getContents returns the resource elements.
-   * 
+   *
    * @return the array of tag, value pairs of resources. (non-Javadoc)
    * @see java.util.ListResourceBundle#getContents()
    * @formatter:off
@@ -68,7 +64,8 @@ public class MyResources extends ListResourceBundle {
                 + " along the direction of the wind" },
         { "msg.water.severegale",
             "High waves. Dense streaks of foam along the direction of the wind."
-                + " Crests of waves begin to topple, tumble and roll over. Spray may affect visibility." },
+                + " Crests of waves begin to topple, tumble and roll over. "
+                + "Spray may affect visibility." },
         { "msg.water.storm",
             "Very high waves with long over-hanging crests. The resulting foam, in great patches,"
                 + " is blown in dense white streaks along the direction of the wind."
@@ -78,9 +75,11 @@ public class MyResources extends ListResourceBundle {
             "Large waves begin to form; the white foam crests are more extensive everywhere. "
                 + "Probably some spray." },
         { "msg.water.violentstorm",
-            "Exceptionally high waves (small and medium-size ships might disappear behind the waves)."
+            "Exceptionally high waves "
+            + "(small and medium-size ships might disappear behind the waves)."
                 + " The sea is completely covered with long white patches of foam flying"
-                + " along the direction of the wind. Everywhere the edges of the wave crests are blown into froth."
+                + " along the direction of the wind. "
+                + "Everywhere the edges of the wave crests are blown into froth."
                 + " Visibility affected." },
 
         { "value.no", "no" }, { "value.yes", "yes" }, { "value.Simulated", "simulated" },

@@ -1,6 +1,7 @@
 /**
  * Anchor.java
- * 2 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -13,14 +14,15 @@ public interface Anchor extends VesselComponent {
 
   /**
    * Get the length of the anchor chain i.e., max depth anchor can be extended.
-   * 
+   *
    * @return the length in meters
    */
   float anchorChainLength();
 
   /**
-   * Anchor extension (depth) in meters. Zero means anchor is fully retracted to vessel.
-   * 
+   * Anchor extension (depth) in meters. Zero means anchor is fully retracted to
+   * vessel.
+   *
    * @return the depth in meters
    */
   float anchorDepth();
@@ -32,7 +34,7 @@ public interface Anchor extends VesselComponent {
 
   /**
    * Lower anchor to a specified depth.
-   * 
+   *
    * @param desiredDepth
    *          is the desired extension (depth) of the anchor in meters.
    */

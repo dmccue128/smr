@@ -1,13 +1,13 @@
 /**
  * AbstractCrewMemberFactory.java
- * 19 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.crew;
 
 import com.synadek.smr.control.mission.BlackBox;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -44,11 +43,11 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
   /**
    * Maintain an inbound message queue for each crew member.
    */
-  private static final Map<CrewMember, BlockingQueue<CrewMessage>> crewQueues =
-      new HashMap<>();
+  private static final Map<CrewMember, BlockingQueue<CrewMessage>> crewQueues = new HashMap<>();
 
   /**
-   * Maximum number of milliseconds to wait for a Crew Member thread to terminate.
+   * Maximum number of milliseconds to wait for a Crew Member thread to
+   * terminate.
    */
   private static final long MAX_THREAD_TERMINATION_WAIT = 3000;
 
@@ -75,12 +74,12 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
   /**
    * Acquire a reference to the application logger.
    */
-  protected static Logger log =
-      LogManager.getLogger(AbstractCrewMemberFactory.class.getPackage().getName());
+  protected static Logger log = LogManager
+      .getLogger(AbstractCrewMemberFactory.class.getPackage().getName());
 
   /**
    * Default constructor.
-   * 
+   *
    * @param crewName
    *          the name of the crew member
    * @param rolename
@@ -139,7 +138,7 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
 
   /**
    * Crew Members implement their own processing for each message they receive.
-   * 
+   *
    * @param msg
    *          the message to be processed
    */
@@ -147,7 +146,7 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
 
   /**
    * Return a list of crew members.
-   * 
+   *
    * @return the list
    */
   public Set<CrewMember> crewList() {
@@ -219,8 +218,7 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
         processMessage(msg);
 
       } catch (InterruptedException err) {
-        log.warn("Crew member " + this.getCrewName()
-            + " interrupted while awaiting a message.");
+        log.warn("Crew member " + this.getCrewName() + " interrupted while awaiting a message.");
         try {
           throw err;
         } catch (InterruptedException e) {
@@ -240,7 +238,7 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
 
   /**
    * Tell a message to a specific crew member.
-   * 
+   *
    * @param member
    *          Crew Member to whom the message is addressed
    * @param msg
@@ -259,7 +257,7 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
 
   /**
    * Tell a message to a set of crew members.
-   * 
+   *
    * @param members
    *          the set of members to receive the message
    * @param msg
@@ -274,7 +272,7 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
 
   /**
    * Tell a message to all crew members.
-   * 
+   *
    * @param msg
    *          the message
    */
@@ -284,16 +282,15 @@ public abstract class AbstractCrewMemberFactory implements CrewMember, Runnable 
 
   /**
    * Listen for a message.
-   * 
+   *
    * @param timeoutMillis
-   *          maximum time to wait (milliseconds). If timeoutMillis is zero, listen until a message
-   *          arrives.
+   *          maximum time to wait (milliseconds). If timeoutMillis is zero,
+   *          listen until a message arrives.
    * @return the message
    * @throws InterruptedException
    *           if interrupted or no response after a short time.
    */
-  protected final CrewMessage listen(final long timeoutMillis)
-      throws InterruptedException {
+  protected final CrewMessage listen(final long timeoutMillis) throws InterruptedException {
     final BlockingQueue<CrewMessage> myQueue = crewQueues.get(this);
     if (timeoutMillis > 0) {
       return myQueue.poll(timeoutMillis, TimeUnit.MILLISECONDS);

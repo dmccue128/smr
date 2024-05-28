@@ -1,22 +1,23 @@
 /**
  * BookingCalendar.java
- * 3 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.fleet;
 
 import com.synadek.smr.vessel.Vessel;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A booking calendar for the fleet indicating when each vessel is booked/available.
+ * A booking calendar for the fleet indicating when each vessel is
+ * booked/available.
  */
 public class BookingCalendar {
 
-  private final Vessel[] fleet = { GoldenMoon.getInstance(), SilverMoon.getInstance() };
+  private final Vessel[] fleet = {GoldenMoon.getInstance(), SilverMoon.getInstance() };
 
   private final Map<String, BookingParameter> bookingData = new HashMap<>();
 
@@ -52,8 +53,8 @@ public class BookingCalendar {
   }
 
   /**
-   * Get booking data from a vessel
-   * 
+   * Get booking data from a vessel.
+   *
    * @param vessel
    *          the vessel
    * @return the booking data

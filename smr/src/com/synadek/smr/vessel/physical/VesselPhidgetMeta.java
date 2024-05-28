@@ -1,6 +1,7 @@
 /**
  * VesselPhidgetMeta.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -9,7 +10,8 @@ package com.synadek.smr.vessel.physical;
 import com.synadek.smr.vessel.physical.VesselPhysicalModel.PinType;
 
 /**
- * Descriptor of a pin (digital output, digital input, or analog input) of a Phidget interface kit.
+ * Descriptor of a pin (digital output, digital input, or analog input) of a
+ * Phidget interface kit.
  */
 public class VesselPhidgetMeta {
   /**
@@ -21,20 +23,21 @@ public class VesselPhidgetMeta {
    */
   private final PinType type;
   /**
-   * pin number (relative to type). Note that digital input pin 1 is not the same as digital output
-   * pin 1.
+   * pin number (relative to type). Note that digital input pin 1 is not the
+   * same as digital output pin 1.
    */
   private final int index;
 
   /**
    * Default constructor.
-   * 
+   *
    * @param n
    *          a name for the pin suitable for diagnostic display
    * @param t
    *          the type of the pin (see VesselPhysicalModel.PinType)
    * @param idx
-   *          the physical pin number (relative to type) e.g., zero could be A0, DI0, DO0
+   *          the physical pin number (relative to type) e.g., zero could be A0,
+   *          DI0, DO0
    */
   public VesselPhidgetMeta(final String n, final PinType t, final int idx) {
     this.name = n;
@@ -43,6 +46,8 @@ public class VesselPhidgetMeta {
   }
 
   /**
+   * Get the name.
+   *
    * @return the name
    */
   public final String getName() {
@@ -50,6 +55,8 @@ public class VesselPhidgetMeta {
   }
 
   /**
+   * Get the pin type.
+   *
    * @return the type
    */
   public final PinType getType() {
@@ -57,6 +64,8 @@ public class VesselPhidgetMeta {
   }
 
   /**
+   * Get the pin index.
+   *
    * @return the index
    */
   public final int getIndex() {

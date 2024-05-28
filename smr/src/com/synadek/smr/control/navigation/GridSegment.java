@@ -1,18 +1,18 @@
 /**
  * GridSegment.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.control.navigation;
 
-import com.synadek.core.GPSCoordinates;
-
+import com.synadek.core.GpsCoordinates;
 import org.json.simple.JSONObject;
 
 /**
- * A navigation pattern that covers an area by navigating in strips across the area, top-to-bottom,
- * left-to-right.
+ * A navigation pattern that covers an area by navigating in strips across the
+ * area, top-to-bottom, left-to-right.
  */
 public class GridSegment extends AbstractRouteSegmentImpl {
 
@@ -23,21 +23,24 @@ public class GridSegment extends AbstractRouteSegmentImpl {
 
   /**
    * Default constructor.
-   * 
-   * @param spacing
+   *
+   * @param startLocation
+   *          the start location
+   * @param gridSpacing
    *          the distance between loops of the spiral (meters)
    * @param corner
-   *          the opposite corner of the grid area (initial corner is current location)
+   *          the opposite corner of the grid area (initial corner is current
+   *          location)
    */
-  public GridSegment(final GPSCoordinates startLocation, final int gridSpacing,
-      final GPSCoordinates corner) {
+  public GridSegment(final GpsCoordinates startLocation, final int gridSpacing,
+      final GpsCoordinates corner) {
     super(SegmentType.GRID_SEGMENT, startLocation, corner);
     spacing = gridSpacing;
   }
 
   /**
    * JSON parsing constructor.
-   * 
+   *
    * @param obj
    *          the JSON Object representing this segment
    */
@@ -47,6 +50,8 @@ public class GridSegment extends AbstractRouteSegmentImpl {
   }
 
   /**
+   * Get the spacing.
+   *
    * @return the spacing
    */
   public int getSpacing() {
@@ -54,9 +59,11 @@ public class GridSegment extends AbstractRouteSegmentImpl {
   }
 
   /**
+   * Get the opposite corner.
+   *
    * @return the oppositeCorner
    */
-  public GPSCoordinates getOppositeCorner() {
+  public GpsCoordinates getOppositeCorner() {
     return this.getDestination();
   }
 
@@ -67,8 +74,8 @@ public class GridSegment extends AbstractRouteSegmentImpl {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public JSONObject toJSON() {
-    final JSONObject result = super.toJSON();
+  public JSONObject toJson() {
+    final JSONObject result = super.toJson();
     result.put("spacing", Integer.valueOf(getSpacing()));
     return result;
   }

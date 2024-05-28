@@ -1,30 +1,29 @@
 /**
  * AnalogEventDispatcher.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.vessel.physical;
 
 import java.util.concurrent.LinkedBlockingQueue;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * 
+ * Analog event dispatcher.
  */
 public class AnalogEventDispatcher implements Runnable {
   /**
    * Acquire a reference to the application logger.
    */
-  protected final Logger log =
-      LogManager.getLogger(this.getClass().getPackage().getName());
+  protected final Logger log = LogManager.getLogger(this.getClass().getPackage().getName());
 
   /**
    * Queue of analog input events to be signaled to registered event handlers.
    */
-  private final LinkedBlockingQueue<AnalogEvent> aQueue;
+  private final LinkedBlockingQueue<AnalogEvent> analogEventQueue;
 
   /**
    * VesselPhysicalModel implementation.
@@ -43,7 +42,7 @@ public class AnalogEventDispatcher implements Runnable {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param mdl
    *          PioMode implementation
    * @param myQueue
@@ -51,7 +50,7 @@ public class AnalogEventDispatcher implements Runnable {
    */
   public AnalogEventDispatcher(final VesselPhysicalModel mdl,
       final LinkedBlockingQueue<AnalogEvent> myQueue) {
-    aQueue = myQueue;
+    analogEventQueue = myQueue;
     myPio = mdl;
     done = false;
     new Thread(this).start();
@@ -81,7 +80,7 @@ public class AnalogEventDispatcher implements Runnable {
 
     while (!done) {
       try {
-        AnalogEvent ae = aQueue.take();
+        AnalogEvent ae = analogEventQueue.take();
         if (ae != null) {
           myPio.invokeAnalogHandlers(ae);
         }

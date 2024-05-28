@@ -1,6 +1,7 @@
 /**
  * AnalogEvent.java
- * 2 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -25,7 +26,7 @@ public class AnalogEvent {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param dev
    *          the device model
    * @param val
@@ -37,6 +38,8 @@ public class AnalogEvent {
   }
 
   /**
+   * Get the physical device type.
+   *
    * @return the device
    */
   public final PhysicalDeviceType getDevice() {
@@ -44,6 +47,8 @@ public class AnalogEvent {
   }
 
   /**
+   * Get new value.
+   *
    * @return the newValue
    */
   public final double getNewValue() {

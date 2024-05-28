@@ -1,6 +1,7 @@
 /**
  * TestSolar.java
- * 17 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -8,7 +9,6 @@ package com.synadek.core.test;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -17,9 +17,9 @@ import org.junit.runners.Suite.SuiteClasses;
  * Tests of solar calculations.
  */
 @RunWith(Suite.class)
-@SuiteClasses({ TestEquationOfTime.class, TestJulianDay.class, TestSolarAzimuth.class,
-  TestSolarDeclination.class, TestSolarElevation.class, TestSolarElevationCorrected.class,
-  TestSolarNoon.class, TestSunlight.class, TestSunrise.class, TestSunset.class, })
+@SuiteClasses({TestEquationOfTime.class, TestJulianDay.class, TestSolarAzimuth.class,
+    TestSolarDeclination.class, TestSolarElevation.class, TestSolarElevationCorrected.class,
+    TestSolarNoon.class, TestSunlight.class, TestSunrise.class, TestSunset.class, })
 
 public class TestSolar {
   /**
@@ -34,8 +34,8 @@ public class TestSolar {
   private static final int nanoOfSecond = 0;
   private static final ZoneOffset offset = ZoneOffset.ofHours(-5);
 
-  public static final OffsetDateTime testDateTime = OffsetDateTime.of(year, month,
-      dayOfMonth, hour, minute, second, nanoOfSecond, offset);
+  public static final OffsetDateTime testDateTime = OffsetDateTime.of(year, month, dayOfMonth,
+      hour, minute, second, nanoOfSecond, offset);
 
   // Use GPS coordinates for Times Square in NYC
   public static final double testLatitude = 40.758896;

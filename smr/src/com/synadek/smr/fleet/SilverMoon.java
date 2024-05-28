@@ -1,13 +1,14 @@
 /**
  * SilverMoon.java
- * 3 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.fleet;
 
 import com.synadek.core.ComponentException;
-import com.synadek.core.GPSCoordinates;
+import com.synadek.core.GpsCoordinates;
 import com.synadek.smr.vessel.AbstractVesselImpl;
 import com.synadek.smr.vessel.Anchor;
 import com.synadek.smr.vessel.AnchorImpl;
@@ -35,223 +36,224 @@ import com.synadek.smr.vessel.physical.VesselPhidget22;
  */
 public class SilverMoon extends AbstractVesselImpl {
 
-	/**
-	 * The singleton instance of this class.
-	 */
-	private static final SilverMoon myInstance = null;
+  /**
+   * The singleton instance of this class.
+   */
+  private static final SilverMoon myInstance = null;
 
-	/**
-	 * The serial number assigned to this vessel.
-	 */
-	private static final String SILVER_MOON_SERIAL_NUMBER = "001";
+  /**
+   * The serial number assigned to this vessel.
+   */
+  private static final String SILVER_MOON_SERIAL_NUMBER = "001";
 
-	/**
-	 * Cruising speed of this vessel (knots).
-	 */
-	private static final double SILVER_MOON_CRUISING_SPEED = 8.0;
+  /**
+   * Cruising speed of this vessel (knots).
+   */
+  private static final double SILVER_MOON_CRUISING_SPEED = 8.0;
 
-	/**
-	 * Anchor.
-	 */
-	private Anchor anchor;
+  /**
+   * Anchor.
+   */
+  private Anchor anchor;
 
-	/**
-	 * Battery.
-	 */
-	private Battery battery;
+  /**
+   * Battery.
+   */
+  private Battery battery;
 
-	/**
-	 * Compass.
-	 */
-	private Compass compass;
+  /**
+   * Compass.
+   */
+  private Compass compass;
 
-	/**
-	 * GNSS receiver.
-	 */
-	private GnssReceiver gnssReceiver;
+  /**
+   * GNSS receiver.
+   */
+  private GnssReceiver gnssReceiver;
 
-	/**
-	 * Power manager.
-	 */
-	private PowerManagement powerManagement;
+  /**
+   * Power manager.
+   */
+  private PowerManagement powerManagement;
 
-	/**
-	 * Propeller.
-	 */
-	private Propeller propeller;
+  /**
+   * Propeller.
+   */
+  private Propeller propeller;
 
-	/**
-	 * Rudder.
-	 */
-	private Rudder rudder;
+  /**
+   * Rudder.
+   */
+  private Rudder rudder;
 
-	/**
-	 * Running lights.
-	 */
-	private RunningLights runningLights;
+  /**
+   * Running lights.
+   */
+  private RunningLights runningLights;
 
-	/**
-	 * Wind sensor.
-	 */
-	private WindSensor windSensor;
+  /**
+   * Wind sensor.
+   */
+  private WindSensor windSensor;
 
-	/**
-	 * Default constructor.
-	 */
-	private SilverMoon() {
-		super(new VesselPhidget22(), "Silver Moon", SILVER_MOON_SERIAL_NUMBER);
+  /**
+   * Default constructor.
+   */
+  private SilverMoon() {
+    super(new VesselPhidget22(), "Silver Moon", SILVER_MOON_SERIAL_NUMBER);
 
-		// Connect the components of this vessel
-		try {
+    // Connect the components of this vessel
+    try {
 
-			// Connect the physical model for this vessel
-			this.getPhysicalModel().connect();
+      // Connect the physical model for this vessel
+      this.getPhysicalModel().connect();
 
-			anchor = new AnchorImpl();
-			addComponent(anchor);
+      anchor = new AnchorImpl();
+      addComponent(anchor);
 
-			battery = new BatteryImpl();
-			addComponent(battery);
+      battery = new BatteryImpl();
+      addComponent(battery);
 
-			compass = new CompassImpl();
-			addComponent(compass);
+      compass = new CompassImpl();
+      addComponent(compass);
 
-			gnssReceiver = new GnssReceiverImpl("GNSS");
-			addComponent(gnssReceiver);
+      gnssReceiver = new GnssReceiverImpl("GNSS");
+      addComponent(gnssReceiver);
 
-			powerManagement = new PowerManagementImpl();
-			addComponent(powerManagement);
+      powerManagement = new PowerManagementImpl();
+      addComponent(powerManagement);
 
-			propeller = new PropellerImpl();
-			addComponent(propeller);
+      propeller = new PropellerImpl();
+      addComponent(propeller);
 
-			rudder = new RudderImpl();
-			addComponent(rudder);
+      rudder = new RudderImpl();
+      addComponent(rudder);
 
-			runningLights = new RunningLightsImpl();
-			addComponent(runningLights);
+      runningLights = new RunningLightsImpl();
+      addComponent(runningLights);
 
-			windSensor = new WindSensorImpl();
-			addComponent(windSensor);
+      windSensor = new WindSensorImpl();
+      addComponent(windSensor);
 
-			setStatus(VesselStatus.VESSEL_READY);
+      setStatus(VesselStatus.VESSEL_READY);
 
-		} catch (ComponentException err) {
-			setStatus(VesselStatus.VESSEL_NOT_READY);
-			log.error(err);
-		}
-	}
+    } catch (ComponentException err) {
+      setStatus(VesselStatus.VESSEL_NOT_READY);
+      log.error(err);
+    }
+  }
 
-	/**
-	 * Get a reference to the singleton instance of SilverMoon.
-	 * 
-	 * @return the SilverMoon
-	 */
-	public static Vessel getInstance() {
-		if (myInstance == null) {
-			return new SilverMoon();
-		}
-		return myInstance;
-	}
+  /**
+   * Get a reference to the singleton instance of this vessel.
+   * 
+   */
+  public static Vessel getInstance() {
+    if (myInstance == null) {
+      return new SilverMoon();
+    }
+    return myInstance;
+  }
 
-	/**
-	 * Connect parameter indicates whether to connect to a physical or simulated
-	 * component.
-	 *
-	 * @param sim true if the connection is to a simulation of the component
-	 * @throws ComponentException if an error occurs
-	 */
-	@Override
-	public boolean connect(final boolean sim) throws ComponentException {
+  /**
+   * Connect parameter indicates whether to connect to a physical or simulated
+   * component.
+   *
+   * @param sim
+   *          true if the connection is to a simulation of the component
+   * @throws ComponentException
+   *           if an error occurs
+   */
+  @Override
+  public boolean connect(final boolean sim) throws ComponentException {
 
-		// Simulation is not yet supported for this component
-		if (sim) {
-			log.error(ERR_SIM_NOT_AVAIL);
-			return false;
-		}
+    // Simulation is not yet supported for this component
+    if (sim) {
+      log.error(ERR_SIM_NOT_AVAIL);
+      return false;
+    }
 
-		this.simulated = false;
-		this.connected = true;
-		return true;
-	}
+    this.simulated = false;
+    this.connected = true;
+    return true;
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#getLocation()
-	 */
-	@Override
-	public GPSCoordinates getLocation() {
-		return gnssReceiver.getLocation();
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#getLocation()
+   */
+  @Override
+  public GpsCoordinates getLocation() {
+    return gnssReceiver.getLocation();
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#secureVessel()
-	 */
-	@Override
-	public void secureVessel() {
-		// TODO Auto-generated method stub
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#secureVessel()
+   */
+  @Override
+  public void secureVessel() {
+    // TODO Auto-generated method stub
 
-	}
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#offloadVessel()
-	 */
-	@Override
-	public void offloadVessel() {
-		// TODO Auto-generated method stub
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#offloadVessel()
+   */
+  @Override
+  public void offloadVessel() {
+    // TODO Auto-generated method stub
 
-	}
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#getCruisingSpeed()
-	 */
-	@Override
-	public double getCruisingSpeed() {
-		return SILVER_MOON_CRUISING_SPEED;
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#getCruisingSpeed()
+   */
+  @Override
+  public double getCruisingSpeed() {
+    return SILVER_MOON_CRUISING_SPEED;
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#getCargoWidth()
-	 */
-	@Override
-	public int getCargoWidth() {
-		return 0;
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#getCargoWidth()
+   */
+  @Override
+  public int getCargoWidth() {
+    return 0;
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#getCargoHeight()
-	 */
-	@Override
-	public int getCargoHeight() {
-		return 0;
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#getCargoHeight()
+   */
+  @Override
+  public int getCargoHeight() {
+    return 0;
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.synadek.smr.vessel.Vessel#getCargoDepth()
-	 */
-	@Override
-	public int getCargoDepth() {
-		return 0;
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.synadek.smr.vessel.Vessel#getCargoDepth()
+   */
+  @Override
+  public int getCargoDepth() {
+    return 0;
+  }
 
-	/**
-	 * Get the maximum cargo weight (kg).
-	 */
-	@Override
-	public double getMaximumCargoWeight() {
-		return 0.5;
-	}
+  /**
+   * Get the maximum cargo weight (kg).
+   */
+  @Override
+  public double getMaximumCargoWeight() {
+    return 0.5;
+  }
 }

@@ -1,13 +1,13 @@
 /**
  * RouteSegment.java
- * 3 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.control.navigation;
 
-import com.synadek.core.GPSCoordinates;
-
+import com.synadek.core.GpsCoordinates;
 import org.json.simple.JSONObject;
 
 /**
@@ -39,45 +39,45 @@ public interface RouteSegment {
 
   /**
    * Get the segment type.
-   * 
+   *
    * @return the segmentType
    */
   public SegmentType getType();
 
   /**
    * Get the destination location associated with this Segment.
-   * 
+   *
    * @return the location
    */
-  public GPSCoordinates getDestination();
+  public GpsCoordinates getDestination();
 
   /**
    * Set/Update the destination location associated with this Segment.
-   * 
+   *
    * @param finish
    *          the destination location to set
    */
-  public void setDestination(GPSCoordinates finish);
+  public void setDestination(GpsCoordinates finish);
 
   /**
    * Get the start location associated with this Segment.
-   * 
+   *
    * @return the start location
    */
-  public GPSCoordinates getStartLocation();
+  public GpsCoordinates getStartLocation();
 
   /**
    * Set/Update the start location associated with this Segment.
-   * 
+   *
    * @param startLocation
    *          the start location to set
    */
-  public void setStartLocation(GPSCoordinates startLocation);
+  public void setStartLocation(GpsCoordinates startLocation);
 
   /**
    * Generate a JSON Object representing this Segment.
-   * 
+   *
    * @return the Segment in JSON Object format
    */
-  JSONObject toJSON();
+  JSONObject toJson();
 }

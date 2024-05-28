@@ -1,10 +1,9 @@
 /**
- * package-info.java
- * 3 Apr 2016
+ * package-info.java 28 May 2024
+ *
  * @author Daniel McCue
- */
-/**
- * Database interface.
+ * 
+ *         Database interface.
  */
 
 package com.synadek.smr.database;

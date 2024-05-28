@@ -1,6 +1,7 @@
 /**
  * RouteImpl.java
- * 3 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -8,7 +9,6 @@ package com.synadek.smr.control.navigation;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -31,17 +31,17 @@ public class RouteImpl implements Route {
 
   /**
    * JSON parsing constructor.
-   * 
-   * @param jRoute
+   *
+   * @param jsonRoute
    *          the route represented in a JSON Object
    */
-  public RouteImpl(final JSONObject jRoute) {
+  public RouteImpl(final JSONObject jsonRoute) {
 
     // Initialize the route to an empty list of segments
     myRoute = new LinkedList<>();
 
     // Get the segments from the JSON object, jRoute
-    final JSONArray steps = (JSONArray) jRoute.get("steps");
+    final JSONArray steps = (JSONArray) jsonRoute.get("steps");
 
     // Handle the case of an empty route
     if (steps == null || steps.isEmpty()) {
@@ -91,8 +91,9 @@ public class RouteImpl implements Route {
   /*
    * (non-Javadoc)
    * 
-   * @see com.synadek.smr.control.navigation.Route#addSegment(com.synadek.smr.control.navigation.
-   * AbstractRouteSegmentImpl)
+   * @see
+   * com.synadek.smr.control.navigation.Route#addSegment(com.synadek.smr.control
+   * .navigation. AbstractRouteSegmentImpl)
    */
   @Override
   public void addSegment(final AbstractRouteSegmentImpl segment) {
@@ -116,12 +117,12 @@ public class RouteImpl implements Route {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public JSONObject toJSON() {
+  public JSONObject toJson() {
     final JSONObject result = new JSONObject();
     final JSONArray steps = new JSONArray();
 
     for (RouteSegment segment : myRoute) {
-      steps.add(segment.toJSON());
+      steps.add(segment.toJson());
     }
 
     result.put("steps", steps);

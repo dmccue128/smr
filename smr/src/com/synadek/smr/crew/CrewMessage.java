@@ -1,6 +1,7 @@
 /**
  * CrewMessage.java
- * 21 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -31,7 +32,7 @@ public class CrewMessage {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param fromCrew
    *          Crew Member sending the message
    * @param toCrew
@@ -39,8 +40,7 @@ public class CrewMessage {
    * @param msg
    *          the message
    */
-  public CrewMessage(final CrewMember fromCrew, final CrewMember toCrew,
-      final JSONObject msg) {
+  public CrewMessage(final CrewMember fromCrew, final CrewMember toCrew, final JSONObject msg) {
     timestamp = System.currentTimeMillis();
     sender = fromCrew;
     receiver = toCrew;
@@ -49,7 +49,7 @@ public class CrewMessage {
 
   /**
    * Crew member sending the message.
-   * 
+   *
    * @return the Crew Member
    */
   public final CrewMember getSender() {
@@ -58,7 +58,7 @@ public class CrewMessage {
 
   /**
    * Crew Member receiving the message.
-   * 
+   *
    * @return the Crew Member
    */
   public final CrewMember getReciever() {
@@ -67,7 +67,7 @@ public class CrewMessage {
 
   /**
    * The message.
-   * 
+   *
    * @return the message
    */
   public final JSONObject getMessage() {
@@ -76,7 +76,7 @@ public class CrewMessage {
 
   /**
    * Time the message was sent.
-   * 
+   *
    * @return time in millis since the epoch.
    */
   public final long getTimestamp() {
@@ -85,13 +85,12 @@ public class CrewMessage {
 
   /**
    * Canonical string representation of a crew message.
-   * 
+   *
    * @return the contents of the message (including timestamp)
    */
   @Override
   public final String toString() {
-    return String.format("%d %s->%s: %s", Long.valueOf(this.timestamp),
-        this.sender.getCrewName(), this.receiver.getCrewName(),
-        this.message.toJSONString());
+    return String.format("%d %s->%s: %s", Long.valueOf(this.timestamp), this.sender.getCrewName(),
+        this.receiver.getCrewName(), this.message.toJSONString());
   }
 }

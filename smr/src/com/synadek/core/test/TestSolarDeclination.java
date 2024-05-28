@@ -7,10 +7,8 @@
 package com.synadek.core.test;
 
 import static org.junit.Assert.assertEquals;
-
 import com.synadek.core.InvalidValueException;
 import com.synadek.core.Solar;
-
 import org.junit.Test;
 
 /**
@@ -20,7 +18,7 @@ public class TestSolarDeclination {
 
   /**
    * Test basic calculation of solar declination from a fixed, valid input.
-   * 
+   *
    * @throws InvalidValueException
    *           if date/time is invalid
    */
@@ -35,7 +33,7 @@ public class TestSolarDeclination {
 
   /**
    * Test boundary condition in which a null input parameter is provided.
-   * 
+   *
    * @throws InvalidValueException
    *           if input is null
    */

@@ -1,6 +1,7 @@
 /**
  * InvalidValueException.java
- * 3 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -18,7 +19,7 @@ public class InvalidValueException extends Exception {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param message
    *          an error message describing the nature of the exception
    */

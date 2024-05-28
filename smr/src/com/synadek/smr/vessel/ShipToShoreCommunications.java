@@ -1,6 +1,7 @@
 /**
  * ShipToShoreCommunications.java
- * 1 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -13,38 +14,45 @@ import org.json.simple.JSONObject;
  */
 public interface ShipToShoreCommunications extends VesselComponent {
 
-	/**
-	 * Send a message to shore.
-	 * 
-	 * @param dest    the name of the shore entity to which the message is being
-	 *                sent
-	 * @param message the message
-	 */
-	void sendMessage(String dest, JSONObject message);
+  /**
+   * Send a message to shore.
+   *
+   * @param dest
+   *          the name of the shore entity to which the message is being sent
+   * @param message
+   *          the message
+   */
+  void sendMessage(String dest, JSONObject message);
 
-	/**
-	 * Send an image to shore.
-	 * 
-	 * @param dest      the name of the shore entity to which the message is being
-	 *                  sent
-	 * @param metadata  metadata associated with this image
-	 * @param imagePath local filesystem path to the image file
-	 */
-	void sendMessage(String dest, JSONObject metadata, String imagePath);
+  /**
+   * Send an image to shore.
+   *
+   * @param dest
+   *          the name of the shore entity to which the message is being sent
+   * @param metadata
+   *          metadata associated with this image
+   * @param imagePath
+   *          local filesystem path to the image file
+   */
+  void sendMessage(String dest, JSONObject metadata, String imagePath);
 
-	/**
-	 * Add a listener for messages coming from off-ship.
-	 * 
-	 * @param comm the listener
-	 * @throws NullPointerException if the listener is null
-	 */
-	void addListener(CommunicationsListener comm) throws NullPointerException;
+  /**
+   * Add a listener for messages coming from off-ship.
+   *
+   * @param comm
+   *          the listener
+   * @throws NullPointerException
+   *           if the listener is null
+   */
+  void addListener(CommunicationsListener comm) throws NullPointerException;
 
-	/**
-	 * Remove a listener for messages coming from off-ship.
-	 *
-	 * @param comm the listener
-	 * @throws NullPointerException if the listener is null
-	 */
-	void removeListener(CommunicationsListener comm) throws NullPointerException;
+  /**
+   * Remove a listener for messages coming from off-ship.
+   *
+   * @param comm
+   *          the listener
+   * @throws NullPointerException
+   *           if the listener is null
+   */
+  void removeListener(CommunicationsListener comm) throws NullPointerException;
 }

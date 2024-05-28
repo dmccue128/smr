@@ -1,13 +1,13 @@
 /**
  * Navigator.java
- * 19 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.crew;
 
 import java.util.Set;
-
 import org.json.simple.JSONObject;
 
 /**
@@ -17,7 +17,7 @@ public class Navigator extends AbstractCrewMemberFactory {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param name
    *          the name of this Navigator
    */
@@ -27,7 +27,7 @@ public class Navigator extends AbstractCrewMemberFactory {
 
   /**
    * Process a message to this role.
-   * 
+   *
    * @param msg
    *          the message
    */
@@ -81,7 +81,7 @@ public class Navigator extends AbstractCrewMemberFactory {
 
   /**
    * Process and respond to a survey (yes/no) question from another Crew Member.
-   * 
+   *
    * @param survey
    *          the survey
    */

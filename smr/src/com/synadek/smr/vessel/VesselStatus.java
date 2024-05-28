@@ -1,6 +1,7 @@
 /**
  * VesselStatus.java
- * 18 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -29,8 +30,8 @@ public class VesselStatus {
   private double batteryVoltage;
   // percent battery remaining?
 
-  // Communications
-  private int packetCount; // number of packets sent since last powered-up or rebooted
+  // Communications packets sent since last powered-up or rebooted
+  private int packetCount;
 
   // Other
   private long upTime; // time since last power-up or reboot (milliseconds)
@@ -45,8 +46,8 @@ public class VesselStatus {
 
   /**
    * JSON parsing constructor.
-   * 
-   * @param JSONObject
+   *
+   * @param obj
    *          to be parsed
    */
   public VesselStatus(final JSONObject obj) {
@@ -65,6 +66,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get the speed.
+   *
    * @return the speed
    */
   public final double getSpeed() {
@@ -72,6 +75,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set the speed.
+   *
    * @param speed
    *          the speed to set
    */
@@ -80,6 +85,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get heading.
+   *
    * @return the heading
    */
   public final double getHeading() {
@@ -87,6 +94,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set heading.
+   *
    * @param heading
    *          the heading to set
    */
@@ -95,6 +104,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get roll.
+   *
    * @return the roll
    */
   public final double getRoll() {
@@ -102,6 +113,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set roll.
+   *
    * @param roll
    *          the roll to set
    */
@@ -110,6 +123,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get pitch.
+   *
    * @return the pitch
    */
   public final double getPitch() {
@@ -117,6 +132,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set pitch.
+   *
    * @param pitch
    *          the pitch to set
    */
@@ -125,6 +142,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get yaw.
+   *
    * @return the yaw
    */
   public final double getYaw() {
@@ -132,6 +151,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set yaw.
+   *
    * @param yaw
    *          the yaw to set
    */
@@ -140,6 +161,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get surge.
+   *
    * @return the surge
    */
   public final double getSurge() {
@@ -147,6 +170,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set surge.
+   *
    * @param surge
    *          the surge to set
    */
@@ -155,6 +180,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get heave.
+   *
    * @return the heave
    */
   public final double getHeave() {
@@ -162,6 +189,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set heave.
+   *
    * @param heave
    *          the heave to set
    */
@@ -170,6 +199,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get sway.
+   *
    * @return the sway
    */
   public final double getSway() {
@@ -177,6 +208,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set sway.
+   *
    * @param sway
    *          the sway to set
    */
@@ -185,6 +218,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get battery voltage.
+   *
    * @return the batteryVoltage
    */
   public final double getBatteryVoltage() {
@@ -192,6 +227,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set batteryVoltage.
+   *
    * @param batteryVoltage
    *          the batteryVoltage to set
    */
@@ -200,6 +237,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get packet count.
+   *
    * @return the packetCount
    */
   public final int getPacketCount() {
@@ -207,6 +246,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set packetCount.
+   *
    * @param packetCount
    *          the packetCount to set
    */
@@ -215,6 +256,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get uptime.
+   *
    * @return the upTime
    */
   public final long getUpTime() {
@@ -222,6 +265,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set uptime.
+   *
    * @param upTime
    *          the upTime to set
    */
@@ -230,6 +275,8 @@ public class VesselStatus {
   }
 
   /**
+   * Get temperature.
+   *
    * @return the temperature
    */
   public final double getTemperature() {
@@ -237,6 +284,8 @@ public class VesselStatus {
   }
 
   /**
+   * Set temperature.
+   *
    * @param temperature
    *          the temperature to set
    */
@@ -244,8 +293,13 @@ public class VesselStatus {
     this.temperature = temperature;
   }
 
+  /**
+   * Create a JSON object representation of the vessel status.
+   *
+   * @return the status as a JSON object.
+   */
   @SuppressWarnings("unchecked")
-  public JSONObject toJSON() {
+  public JSONObject toJson() {
     final JSONObject result = new JSONObject();
     result.put("speed", Double.valueOf(speed));
     result.put("heading", Double.valueOf(heading));

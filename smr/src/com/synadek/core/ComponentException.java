@@ -1,6 +1,7 @@
 /**
  * ComponentException.java
- * 2 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -17,7 +18,7 @@ public class ComponentException extends Exception {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param msg
    *          is the error message associated with this exception
    */

@@ -1,13 +1,13 @@
 /**
  * BookingParameter.java
- * 3 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.fleet;
 
-import com.synadek.core.GPSCoordinates;
-
+import com.synadek.core.GpsCoordinates;
 import java.util.Date;
 import java.util.Set;
 
@@ -46,7 +46,7 @@ public class BookingParameter {
   /**
    * Current location of vessel.
    */
-  private GPSCoordinates currentLocation;
+  private GpsCoordinates currentLocation;
 
   /**
    * Default constructor.
@@ -56,6 +56,8 @@ public class BookingParameter {
   }
 
   /**
+   * Get the booked dates.
+   *
    * @return the bookedDates
    */
   public final Set<Date> getBookedDates() {
@@ -63,6 +65,8 @@ public class BookingParameter {
   }
 
   /**
+   * Set the booked dates.
+   *
    * @param bookedDates
    *          the bookedDates to set
    */
@@ -71,6 +75,8 @@ public class BookingParameter {
   }
 
   /**
+   * Get the vessel's cruising speed.
+   *
    * @return the cruisingSpeed in knots
    */
   public final double getCruisingSpeed() {
@@ -78,6 +84,8 @@ public class BookingParameter {
   }
 
   /**
+   * Set the vessel's cruising speed.
+   *
    * @param cruisingSpeed
    *          the cruisingSpeed in knots
    */
@@ -86,6 +94,8 @@ public class BookingParameter {
   }
 
   /**
+   * Get the cargo width.
+   *
    * @return the cargoWidth
    */
   public final double getCargoWidth() {
@@ -93,6 +103,8 @@ public class BookingParameter {
   }
 
   /**
+   * Set the cargo width.
+   *
    * @param cargoWidth
    *          the cargoWidth to set
    */
@@ -101,6 +113,8 @@ public class BookingParameter {
   }
 
   /**
+   * Get the cargo height.
+   *
    * @return the cargoHeight
    */
   public final double getCargoHeight() {
@@ -108,6 +122,8 @@ public class BookingParameter {
   }
 
   /**
+   * Set the cargo height.
+   *
    * @param cargoHeight
    *          the cargoHeight to set
    */
@@ -116,6 +132,8 @@ public class BookingParameter {
   }
 
   /**
+   * Get the cargo depth.
+   *
    * @return the cargoDepth
    */
   public final double getCargoDepth() {
@@ -123,6 +141,8 @@ public class BookingParameter {
   }
 
   /**
+   * Set the cargo depth.
+   *
    * @param cargoDepth
    *          the cargoDepth to set
    */
@@ -131,6 +151,8 @@ public class BookingParameter {
   }
 
   /**
+   * Get the cargo weight.
+   *
    * @return the maximumCargoWeight
    */
   public final double getMaximumCargoWeight() {
@@ -138,6 +160,8 @@ public class BookingParameter {
   }
 
   /**
+   * Set the cargo maximum weight.
+   *
    * @param maximumCargoWeight
    *          the maximumCargoWeight to set
    */
@@ -146,17 +170,21 @@ public class BookingParameter {
   }
 
   /**
+   * Get the current location.
+   *
    * @return the currentLocation
    */
-  public GPSCoordinates getCurrentLocation() {
+  public GpsCoordinates getCurrentLocation() {
     return currentLocation;
   }
 
   /**
+   * Set the current location.
+   *
    * @param currentLocation
    *          the currentLocation to set
    */
-  public void setCurrentLocation(GPSCoordinates currentLocation) {
+  public void setCurrentLocation(GpsCoordinates currentLocation) {
     this.currentLocation = currentLocation;
   }
 

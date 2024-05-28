@@ -1,6 +1,7 @@
 /**
  * InvalidBookingDateException.java
- * 3 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -24,8 +25,8 @@ public class InvalidBookingDateException extends Exception {
   final Date invalidDate;
 
   /**
-   * Default constructor
-   * 
+   * Default constructor.
+   *
    * @param date
    *          the invalid date
    */
@@ -34,6 +35,8 @@ public class InvalidBookingDateException extends Exception {
   }
 
   /**
+   * Get the invalid date.
+   *
    * @return the invalidDate
    */
   public final Date getInvalidDate() {

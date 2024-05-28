@@ -1,6 +1,7 @@
 /**
  * AbstractVesselModel.java
- * 1 Dec 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -9,52 +10,48 @@ package com.synadek.smr.vessel.physical;
 import com.synadek.core.AbstractComponent;
 import com.synadek.core.Component;
 import com.synadek.core.ComponentException;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Methods common to all physical device models for vessels.
  */
 public abstract class AbstractVesselModel extends AbstractComponent
-    implements VesselPhysicalModel {
+    implements
+      VesselPhysicalModel {
 
   /**
-   * A registry for handlers that respond to digital input state change events. Mapping GPIO pin
-   * numbers to the set of handlers for that GPIO pin.
+   * A registry for handlers that respond to digital input state change events.
+   * Mapping GPIO pin numbers to the set of handlers for that GPIO pin.
    */
-  private final Map<PhysicalDeviceType,
-      Collection<PdlDigitalHandler>> digitalInputHandlerMap = new HashMap<>();
+  private final Map<PhysicalDeviceType, Set<PdlDigitalHandler>> digitalInHdlrMap = new HashMap<>();
 
   /**
-   * A registry for handlers that respond to digital output state change events. Mapping GPIO pin
-   * numbers to the set of handlers for that GPIO pin.
+   * A registry for handlers that respond to digital output state change events.
+   * Mapping GPIO pin numbers to the set of handlers for that GPIO pin.
    */
-  private final Map<PhysicalDeviceType,
-      Collection<PdlDigitalHandler>> digitalOutputHandlerMap = new HashMap<>();
+  private final Map<PhysicalDeviceType, Set<PdlDigitalHandler>> digitalOutHdlrMap = new HashMap<>();
 
   /**
-   * A registry for handlers that respond to analog input state change events. Mapping GPIO pin
-   * numbers to the set of handlers for that GPIO pin.
+   * A registry for handlers that respond to analog input state change events.
+   * Mapping GPIO pin numbers to the set of handlers for that GPIO pin.
    */
-  private final Map<PhysicalDeviceType,
-      Collection<PdlAnalogHandler>> analogInputHandlerMap = new HashMap<>();
+  private final Map<PhysicalDeviceType, Set<PdlAnalogHandler>> analogInHdlrMap = new HashMap<>();
 
   /**
    * Queue of analog input events to be signaled to registered event handlers.
    */
-  private final LinkedBlockingQueue<AnalogEvent> aQueue = new LinkedBlockingQueue<>();
+  private final LinkedBlockingQueue<AnalogEvent> ainQueue = new LinkedBlockingQueue<>();
 
   /**
    * Queue of digital input events to be signaled to registered event handlers.
    */
-  private final LinkedBlockingQueue<DigitalInputEvent> diQueue =
-      new LinkedBlockingQueue<>();
+  private final LinkedBlockingQueue<DigitalInputEvent> diQueue = new LinkedBlockingQueue<>();
 
   /**
    * Analog input event dispatcher.
@@ -74,7 +71,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   protected synchronized void startEventDispatchers() {
-    analogInputEventDispatcher = new AnalogEventDispatcher(this, aQueue);
+    analogInputEventDispatcher = new AnalogEventDispatcher(this, ainQueue);
     digitalInputEventDispatcher = new DigitalInputEventDispatcher(this, diQueue);
   }
 
@@ -99,7 +96,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
 
   /**
    * Named constructor.
-   * 
+   *
    * @param componentName
    *          the name of this component instance
    */
@@ -108,10 +105,11 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   /**
-   * Add a digital input change listener. The input change handler method will be called when an
-   * input on this Interface Kit has changed. There is no limit on the number of input change
-   * handlers that can be registered for a particular VesselPhysicalModel.
-   * 
+   * Add a digital input change listener. The input change handler method will
+   * be called when an input on this Interface Kit has changed. There is no
+   * limit on the number of input change handlers that can be registered for a
+   * particular VesselPhysicalModel.
+   *
    * @param dev
    *          the GPIO Pin number of the I/O
    * @param hdlr
@@ -123,18 +121,18 @@ public abstract class AbstractVesselModel extends AbstractComponent
   public void addDigitalInputListener(PhysicalDeviceType dev, PdlDigitalHandler hdlr)
       throws ComponentException {
 
-    if (digitalInputHandlerMap == null) {
+    if (digitalInHdlrMap == null) {
       log.error("Failed to register a handler because handler map is null");
       return;
     }
 
     // Look up the list of handlers for this particular digital input pin
-    Collection<PdlDigitalHandler> idxList = digitalInputHandlerMap.get(dev);
+    Set<PdlDigitalHandler> idxList = digitalInHdlrMap.get(dev);
 
     // Create a set of handlers if it does not already exist
     if (idxList == null) {
       idxList = new HashSet<>();
-      digitalInputHandlerMap.put(dev, idxList);
+      digitalInHdlrMap.put(dev, idxList);
     }
 
     // Add this handler to the list
@@ -142,25 +140,23 @@ public abstract class AbstractVesselModel extends AbstractComponent
 
     if (hdlr instanceof Component) {
       final Component c = (Component) hdlr;
-      log.info(
-          String.format("%s registered a handler for %s", c.getName(), dev.toString()));
+      log.info(String.format("%s registered a handler for %s", c.getName(), dev.toString()));
     } else {
-      log.info(String.format("A %s registered a handler for %s",
-          hdlr.getClass().getSimpleName(), dev.toString()));
+      log.info(String.format("A %s registered a handler for %s", hdlr.getClass().getSimpleName(),
+          dev.toString()));
     }
   }
 
   /**
    * Remove a digital input change listener from all GPIO pins.
-   * 
+   *
    * @param hdlr
    *          the listener
    * @throws ComponentException
    *           if underlying device is not connected
    */
   @Override
-  public void removeDigitalInputListener(PdlDigitalHandler hdlr)
-      throws ComponentException {
+  public void removeDigitalInputListener(PdlDigitalHandler hdlr) throws ComponentException {
 
     // Check parameter
     if (hdlr == null) {
@@ -168,7 +164,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Confirm that handler maps were initialized correctly
-    if (digitalInputHandlerMap == null) {
+    if (digitalInHdlrMap == null) {
       log.error("Failed to unregister a handler because digital handler map is null");
       return;
     }
@@ -176,8 +172,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
     // Remove this handler from all pins and count the number of
     // different events (I/O pins) for which it was registered
     int count = 0;
-    for (Entry<PhysicalDeviceType,
-        Collection<PdlDigitalHandler>> item : digitalInputHandlerMap.entrySet()) {
+    for (Entry<PhysicalDeviceType, Set<PdlDigitalHandler>> item : digitalInHdlrMap
+        .entrySet()) {
 
       final Collection<PdlDigitalHandler> entryList = item.getValue();
 
@@ -191,9 +187,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
     // Log a debugging message
     if (hdlr instanceof Component) {
       final Component c = (Component) hdlr;
-      log.info(
-          String.format("Component %s unregistered %d digital input event handler(s)",
-              c.getName(), Integer.valueOf(count)));
+      log.info(String.format("Component %s unregistered %d digital input event handler(s)",
+          c.getName(), Integer.valueOf(count)));
     } else {
       log.info(String.format("A %s unregistered %d digital input event handler(s)",
           hdlr.getClass().getSimpleName(), Integer.valueOf(count)));
@@ -201,11 +196,11 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   /**
-   * Add a digital output change listener for digital outputs on this device. The output change
-   * handler method will be called when an input on this Interface Kit has changed. There is no
-   * limit on the number of output change handlers that can be registered for a particular
-   * VesselPhysicalModel.
-   * 
+   * Add a digital output change listener for digital outputs on this device.
+   * The output change handler method will be called when an input on this
+   * Interface Kit has changed. There is no limit on the number of output change
+   * handlers that can be registered for a particular VesselPhysicalModel.
+   *
    * @param dev
    *          the GPIO Pin number of the I/O
    * @param hdlr
@@ -217,18 +212,18 @@ public abstract class AbstractVesselModel extends AbstractComponent
   public void addDigitalOutputListener(PhysicalDeviceType dev, PdlDigitalHandler hdlr)
       throws ComponentException {
 
-    if (digitalOutputHandlerMap == null) {
+    if (digitalOutHdlrMap == null) {
       log.error("Failed to register a handler because handler map is null");
       return;
     }
 
     // Look up the list of handlers for this particular digital input
-    Collection<PdlDigitalHandler> idxList = digitalOutputHandlerMap.get(dev);
+    Set<PdlDigitalHandler> idxList = digitalOutHdlrMap.get(dev);
 
     // Create it if it does not already exist
     if (idxList == null) {
       idxList = new HashSet<>();
-      digitalOutputHandlerMap.put(dev, idxList);
+      digitalOutHdlrMap.put(dev, idxList);
     }
 
     // Add this handler to the list
@@ -236,8 +231,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
 
     if (hdlr instanceof Component) {
       final Component c = (Component) hdlr;
-      log.info(String.format("Component %s registered a handler for device %s",
-          c.getName(), dev.toString()));
+      log.info(String.format("Component %s registered a handler for device %s", c.getName(),
+          dev.toString()));
     } else {
       log.info(String.format("A %s registered a handler for device %s",
           hdlr.getClass().getSimpleName(), dev.toString()));
@@ -246,15 +241,14 @@ public abstract class AbstractVesselModel extends AbstractComponent
 
   /**
    * Remove a digital output change listener from all GPIO pins.
-   * 
+   *
    * @param hdlr
    *          the listener
    * @throws ComponentException
    *           if underlying device is not connected
    */
   @Override
-  public void removeDigitalOutputListener(PdlDigitalHandler hdlr)
-      throws ComponentException {
+  public void removeDigitalOutputListener(PdlDigitalHandler hdlr) throws ComponentException {
 
     // Check parameter
     if (hdlr == null) {
@@ -262,7 +256,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Confirm that handler maps were initialized correctly
-    if (digitalOutputHandlerMap == null) {
+    if (digitalOutHdlrMap == null) {
       log.error("Failed to unregister a handler because digital handler map is null");
       return;
     }
@@ -270,8 +264,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
     // Remove this handler from all pins and count the number of
     // different events (I/O pins) for which it was registered
     int count = 0;
-    for (Entry<PhysicalDeviceType,
-        Collection<PdlDigitalHandler>> item : digitalOutputHandlerMap.entrySet()) {
+    for (Entry<PhysicalDeviceType, Set<PdlDigitalHandler>> item : digitalOutHdlrMap
+        .entrySet()) {
 
       final Collection<PdlDigitalHandler> entryList = item.getValue();
 
@@ -286,9 +280,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
     // Log a debugging message
     if (hdlr instanceof Component) {
       final Component c = (Component) hdlr;
-      log.info(
-          String.format("Component %s unregistered %d digital output event handler(s)",
-              c.getName(), Integer.valueOf(count)));
+      log.info(String.format("Component %s unregistered %d digital output event handler(s)",
+          c.getName(), Integer.valueOf(count)));
     } else {
       log.info(String.format("A %s unregistered %d digital output event handler(s)",
           hdlr.getClass().getSimpleName(), Integer.valueOf(count)));
@@ -296,11 +289,12 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   /**
-   * Add an analog sensor change listener. The sensor change handler method will be called when a
-   * sensor on this device has changed by at least the trigger amount (see SetAnalogChangeTrigger)
-   * that has been set for this sensor. There is no limit on the number of sensor change handlers
-   * that can be registered for a particular VesselPhysicalModel.
-   * 
+   * Add an analog sensor change listener. The sensor change handler method will
+   * be called when a sensor on this device has changed by at least the trigger
+   * amount (see SetAnalogChangeTrigger) that has been set for this sensor.
+   * There is no limit on the number of sensor change handlers that can be
+   * registered for a particular VesselPhysicalModel.
+   *
    * @param dev
    *          the GPIO Pin number of the I/O
    * @param hdlr
@@ -312,18 +306,18 @@ public abstract class AbstractVesselModel extends AbstractComponent
   public void addAnalogInputListener(PhysicalDeviceType dev, PdlAnalogHandler hdlr)
       throws ComponentException {
 
-    if (analogInputHandlerMap == null) {
+    if (analogInHdlrMap == null) {
       log.error("Failed to register a handler because handler map is null");
       return;
     }
 
     // Look up the list of handlers for this particular digital input
-    Collection<PdlAnalogHandler> idxList = analogInputHandlerMap.get(dev);
+    Set<PdlAnalogHandler> idxList = analogInHdlrMap.get(dev);
 
     // Create it if it does not already exist
     if (idxList == null) {
-      idxList = new LinkedList<>();
-      analogInputHandlerMap.put(dev, idxList);
+      idxList = new HashSet<>();
+      analogInHdlrMap.put(dev, idxList);
     }
 
     // Add this handler to the list
@@ -331,8 +325,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
 
     if (hdlr instanceof Component) {
       final Component c = (Component) hdlr;
-      log.info(String.format("Component %s registered a handler for analog device %s",
-          c.getName(), dev.toString()));
+      log.info(String.format("Component %s registered a handler for analog device %s", c.getName(),
+          dev.toString()));
     } else {
       log.info(String.format("A %s registered a handler for analog device %s",
           hdlr.getClass().getSimpleName(), dev.toString()));
@@ -341,7 +335,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
 
   /**
    * Remove an analog sensor change listener from all GPIO pins.
-   * 
+   *
    * @param hdlr
    *          the listener
    * @throws ComponentException
@@ -356,7 +350,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Confirm that handler maps were initialized correctly
-    if (analogInputHandlerMap == null) {
+    if (analogInHdlrMap == null) {
       log.error("Failed to unregister a handler because analog handler map is null");
       return;
     }
@@ -364,8 +358,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
     // Remove this handler from all pins and count the number of
     // different events (I/O pins) for which it was registered
     int count = 0;
-    for (Entry<PhysicalDeviceType,
-        Collection<PdlAnalogHandler>> item : analogInputHandlerMap.entrySet()) {
+    for (Entry<PhysicalDeviceType, Set<PdlAnalogHandler>> item : analogInHdlrMap
+        .entrySet()) {
 
       final Collection<PdlAnalogHandler> entryList = item.getValue();
 
@@ -389,44 +383,45 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   /**
-   * Get the (possibly empty) collection of digital input handlers registered for this gpio index
-   * 
+   * Get the (possibly empty) collection of digital input handlers registered
+   * for this gpio index.
+   *
    * @param dev
    *          the GPIO Pin number of the I/O
    * @return the handlers
    */
-  protected Collection<PdlDigitalHandler>
-      getDigitalInputHandlers(final PhysicalDeviceType dev) {
-    return digitalInputHandlerMap.get(dev);
+  protected Collection<PdlDigitalHandler> getDigitalInputHandlers(final PhysicalDeviceType dev) {
+    return digitalInHdlrMap.get(dev);
   }
 
   /**
-   * Get the (possibly empty) collection of digital output handlers registered for this gpio index
-   * 
+   * Get the (possibly empty) collection of digital output handlers registered
+   * for this gpio index.
+   *
    * @param dev
    *          the GPIO Pin number of the I/O
    * @return the handlers
    */
-  protected Collection<PdlDigitalHandler>
-      getDigitalOutputHandlers(final PhysicalDeviceType dev) {
-    return digitalOutputHandlerMap.get(dev);
+  protected Collection<PdlDigitalHandler> getDigitalOutputHandlers(final PhysicalDeviceType dev) {
+    return digitalOutHdlrMap.get(dev);
   }
 
   /**
-   * Get the (possibly empty) collection of analog input handlers registered for this gpio index
-   * 
+   * Get the (possibly empty) collection of analog input handlers registered for
+   * this gpio index.
+   *
    * @param dev
    *          the GPIO Pin number of the I/O
    * @return the handlers
    */
-  protected Collection<PdlAnalogHandler>
-      getAnalogInputHandlers(final PhysicalDeviceType dev) {
-    return analogInputHandlerMap.get(dev);
+  protected Collection<PdlAnalogHandler> getAnalogInputHandlers(final PhysicalDeviceType dev) {
+    return analogInHdlrMap.get(dev);
   }
 
   /**
-   * Dispatch an analog input event to registered handlers (typically logical devices)
-   * 
+   * Dispatch an analog input event to registered handlers (typically logical
+   * devices).
+   *
    * @param evt
    *          the analog event descriptor
    */
@@ -438,8 +433,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Get the analog input handlers (if any) associated with this device
-    final Collection<PdlAnalogHandler> handlers =
-        this.getAnalogInputHandlers(evt.getDevice());
+    final Collection<PdlAnalogHandler> handlers = this.getAnalogInputHandlers(evt.getDevice());
 
     // No handlers?
     if (handlers == null) {
@@ -447,12 +441,13 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Queue the event to be processed by the event processing thread of the Pio
-    aQueue.offer(evt);
+    ainQueue.offer(evt);
   }
 
   /**
-   * Dispatch a digital input event to registered handlers (typically logical devices)
-   * 
+   * Dispatch a digital input event to registered handlers (typically logical
+   * devices).
+   *
    * @param evt
    *          the digital input event descriptor
    */
@@ -464,8 +459,7 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Get the analog input handlers (if any) associated with this device
-    final Collection<PdlAnalogHandler> handlers =
-        this.getAnalogInputHandlers(evt.getDevice());
+    final Collection<PdlAnalogHandler> handlers = this.getAnalogInputHandlers(evt.getDevice());
 
     // No handlers?
     if (handlers == null) {
@@ -477,8 +471,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   /**
-   * Invoke registered handlers (if any) for analog input events
-   * 
+   * Invoke registered handlers (if any) for analog input events.
+   *
    * @param evt
    *          the event to dispatch to the handlers
    */
@@ -491,16 +485,14 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Get the analog input handlers (if any) associated with this device
-    final Collection<PdlAnalogHandler> handlers =
-        this.getAnalogInputHandlers(evt.getDevice());
+    final Collection<PdlAnalogHandler> handlers = this.getAnalogInputHandlers(evt.getDevice());
 
     // No handlers?
     if (handlers == null) {
       return;
     }
 
-    log.info("Invoking handler(s) for event (" + evt.getDevice() + "," + evt.getNewValue()
-        + ")");
+    log.info("Invoking handler(s) for event (" + evt.getDevice() + "," + evt.getNewValue() + ")");
 
     // Invoke each handler in turn
     for (PdlAnalogHandler hdlr : handlers) {
@@ -513,8 +505,8 @@ public abstract class AbstractVesselModel extends AbstractComponent
   }
 
   /**
-   * Invoke registered handlers (if any) for digital input events
-   * 
+   * Invoke registered handlers (if any) for digital input events.
+   *
    * @param evt
    *          the event to dispatch to the handlers
    */
@@ -527,16 +519,14 @@ public abstract class AbstractVesselModel extends AbstractComponent
     }
 
     // Get the analog input handlers (if any) associated with this device
-    final Collection<PdlDigitalHandler> handlers =
-        this.getDigitalInputHandlers(evt.getDevice());
+    final Collection<PdlDigitalHandler> handlers = this.getDigitalInputHandlers(evt.getDevice());
 
     // No handlers?
     if (handlers == null) {
       return;
     }
 
-    log.info("Invoking handler(s) for event (" + evt.getDevice() + "," + evt.getNewState()
-        + ")");
+    log.info("Invoking handler(s) for event (" + evt.getDevice() + "," + evt.getNewState() + ")");
 
     // Invoke each handler in turn
     for (PdlDigitalHandler hdlr : handlers) {
@@ -551,7 +541,9 @@ public abstract class AbstractVesselModel extends AbstractComponent
   /*
    * (non-Javadoc)
    * 
-   * @see us.steriliz.qd.pdl.PioModel#getDeviceIterator(us.steriliz.qd.pdl.PioModel.PinType)
+   * @see
+   * us.steriliz.qd.pdl.PioModel#getDeviceIterator(us.steriliz.qd.pdl.PioModel.
+   * PinType)
    */
   @Override
   public PdmIterator getDeviceIterator(PinType type) {

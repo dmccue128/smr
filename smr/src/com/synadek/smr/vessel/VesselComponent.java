@@ -1,6 +1,7 @@
 /**
  * VesselComponent.java
- * 18 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -12,9 +13,9 @@ package com.synadek.smr.vessel;
 public interface VesselComponent {
 
   /**
-   * Types of components that may be present on a vessel. Note: Not all vessels implement all
-   * components. Some vessels may implement more than one instance of a component type e.g., two
-   * propellers
+   * Types of components that may be present on a vessel. Note: Not all vessels
+   * implement all components. Some vessels may implement more than one instance
+   * of a component type e.g., two propellers
    */
   public enum VesselComponentType {
     /**
@@ -22,7 +23,7 @@ public interface VesselComponent {
      */
     VESSEL_ANCHOR,
     /**
-     * Attitude (roll, pitch, yaw, surge, sway, heave)
+     * Attitude (roll, pitch, yaw, surge, sway, heave).
      */
     VESSEL_ATTITUDE,
     /**

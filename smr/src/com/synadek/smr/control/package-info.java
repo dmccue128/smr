@@ -1,11 +1,9 @@
 /**
- * package-info.java
- * 3 Apr 2016
+ * package-info.java 28 May 2024
+ *
  * @author Daniel McCue
- */
-
-/**
- * Application startup / shutdown.
+ * 
+ *         Application startup / shutdown.
  */
 
 package com.synadek.smr.control;

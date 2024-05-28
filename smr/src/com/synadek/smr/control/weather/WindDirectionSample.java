@@ -1,14 +1,15 @@
 /**
  * WindDirectionSample.java
- * 17 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
 package com.synadek.smr.control.weather;
 
 /**
- * Each Wind Direction sample contains data necessary to continuously compute average direction and
- * standard deviation.
+ * Each Wind Direction sample contains data necessary to continuously compute
+ * average direction and standard deviation.
  */
 class WindDirectionSample {
 
@@ -33,7 +34,7 @@ class WindDirectionSample {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param heading
    *          is the heading in degrees
    */
@@ -46,7 +47,7 @@ class WindDirectionSample {
 
   /**
    * The heading.
-   * 
+   *
    * @return the heading in radians
    */
   public double getHeading() {
@@ -55,7 +56,7 @@ class WindDirectionSample {
 
   /**
    * The cosine of the heading.
-   * 
+   *
    * @return the cos
    */
   public double getCos() {
@@ -64,7 +65,7 @@ class WindDirectionSample {
 
   /**
    * The sin of the heading.
-   * 
+   *
    * @return the sin
    */
   public double getSin() {
@@ -73,7 +74,7 @@ class WindDirectionSample {
 
   /**
    * Timestamp when the sample was recorded.
-   * 
+   *
    * @return the timestamp in millis since the epoch
    */
   public long getTimestamp() {

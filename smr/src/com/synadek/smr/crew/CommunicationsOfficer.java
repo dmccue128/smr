@@ -1,6 +1,7 @@
 /**
  * CommunicationsOfficer.java
- * 18 Mar 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -15,7 +16,7 @@ public class CommunicationsOfficer extends AbstractCrewMemberFactory {
 
   /**
    * Default constructor.
-   * 
+   *
    * @param name
    *          the name of this Communications Officer
    */
@@ -25,7 +26,7 @@ public class CommunicationsOfficer extends AbstractCrewMemberFactory {
 
   /**
    * Process a message to this role.
-   * 
+   *
    * @param msg
    *          the message
    */
@@ -52,12 +53,12 @@ public class CommunicationsOfficer extends AbstractCrewMemberFactory {
         final String destType = (String) contents.get("destType");
         if (destType.equals("ship")) {
           // Intership communications
-          log.debug("Sending ship-to-ship communications to " + dest + ": "
-              + contents.toJSONString());
+          log.debug(
+              "Sending ship-to-ship communications to " + dest + ": " + contents.toJSONString());
         } else {
           // Ship to shore communications
-          log.debug("Sending ship-to-shore communications to " + dest + ": "
-              + contents.toJSONString());
+          log.debug(
+              "Sending ship-to-shore communications to " + dest + ": " + contents.toJSONString());
         }
         break;
 
@@ -69,7 +70,7 @@ public class CommunicationsOfficer extends AbstractCrewMemberFactory {
 
   /**
    * Process and respond to a survey (yes/no) question from another Crew Member.
-   * 
+   *
    * @param survey
    *          the survey
    */

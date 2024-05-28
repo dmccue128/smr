@@ -1,6 +1,7 @@
 /**
  * Power.java
- * 2 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -24,14 +25,15 @@ public interface PowerManagement extends VesselComponent {
      */
     POWERED_DOWN,
     /**
-     * Sleeping -- paused and drawing minimal power, but not completely shut down.
+     * Sleeping -- paused and drawing minimal power, but not completely shut
+     * down.
      */
     SLEEPING
   }
 
   /**
    * Get power status.
-   * 
+   *
    * @return the status
    */
   PowerStatus getStatus();

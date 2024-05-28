@@ -1,6 +1,7 @@
 /**
  * WindImpl.java
- * 17 Apr 2016
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -9,7 +10,6 @@ package com.synadek.smr.control.weather;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,17 +19,20 @@ import org.apache.logging.log4j.Logger;
 public class WindImpl implements Wind {
 
   /**
-   * Establish a default size of the sample set over which wind measurements will be averaged.
+   * Establish a default size of the sample set over which wind measurements
+   * will be averaged.
    */
   private static final int DEFAULT_SAMPLE_SIZE = 10;
 
   /**
-   * Define the control variable for heading sample size and initialize to the default.
+   * Define the control variable for heading sample size and initialize to the
+   * default.
    */
   private int maxHeadingSamples = DEFAULT_SAMPLE_SIZE;
 
   /**
-   * Define the control variable for speed sample size and initialize to the default.
+   * Define the control variable for speed sample size and initialize to the
+   * default.
    */
   private int maxSpeedSamples = DEFAULT_SAMPLE_SIZE;
   /**
@@ -63,7 +66,8 @@ public class WindImpl implements Wind {
   private double speedSd;
 
   /**
-   * Desired period over which to collect and average samples for wind measurements.
+   * Desired period over which to collect and average samples for wind
+   * measurements.
    */
   private int sampleTimeSeconds;
 
@@ -135,10 +139,9 @@ public class WindImpl implements Wind {
     }
     sampleTimeSeconds = samplePeriodSeconds;
     final long desiredSampleTimeMillis = samplePeriodSeconds * 1000;
-    maxHeadingSamples =
-        (int) Math.round(desiredSampleTimeMillis / (double) headingIntersampleTime);
-    maxSpeedSamples =
-        (int) Math.round(desiredSampleTimeMillis / (double) speedIntersampleTime);
+    maxHeadingSamples = (int) Math
+        .round(desiredSampleTimeMillis / (double) headingIntersampleTime);
+    maxSpeedSamples = (int) Math.round(desiredSampleTimeMillis / (double) speedIntersampleTime);
   }
 
   /*
@@ -194,8 +197,8 @@ public class WindImpl implements Wind {
   }
 
   /**
-   * Capture a new sample and update average direction as appropriate
-   * 
+   * Capture a new sample and update average direction as appropriate.
+   *
    * @param heading
    *          is the current direction heading in degrees
    */
@@ -226,8 +229,8 @@ public class WindImpl implements Wind {
   }
 
   /**
-   * Capture a new sample and update average speed as appropriate
-   * 
+   * Capture a new sample and update average speed as appropriate.
+   *
    * @param speed
    *          is the current speed in meters per second
    */
@@ -258,14 +261,14 @@ public class WindImpl implements Wind {
   }
 
   /**
-   * Update average and standard deviation for wind speed. Per Wikipedia, this algorithm is due to
-   * Knuth, who cites Welford.
+   * Update average and standard deviation for wind speed. Per Wikipedia, this
+   * algorithm is due to Knuth, who cites Welford.
    */
   private final void calculateAvgSpeed() {
 
     int count = 0;
     double mean = 0.0;
-    double M2 = 0.0;
+    double mean2 = 0.0;
     double sum = 0.0;
 
     for (WindSpeedSample sample : wsSamples) {
@@ -274,7 +277,7 @@ public class WindImpl implements Wind {
       sum += speed;
       double delta = speed - mean;
       mean += delta / count;
-      M2 += delta * (speed - mean);
+      mean2 += delta * (speed - mean);
     }
 
     this.speedAvg = sum / count;
@@ -282,30 +285,31 @@ public class WindImpl implements Wind {
     if (count < 2) {
       this.speedSd = Double.NaN;
     } else {
-      this.speedSd = M2 / (count - 1);
+      this.speedSd = mean2 / (count - 1);
     }
   }
 
   /**
-   * Update the average and standard deviation for wind direction from a set of samples. Uses
-   * Yamartino method as described in Wikipedia. See http://en.wikipedia.org/wiki/Yamartino_method
+   * Update the average and standard deviation for wind direction from a set of
+   * samples. Uses Yamartino method as described in Wikipedia. See
+   * http://en.wikipedia.org/wiki/Yamartino_method
    */
   private void calculateAvgDirection() {
     // Compute updated average direction using Yamartino algorithm
-    double sSum = 0;
-    double cSum = 0;
+    double ssSum = 0;
+    double ccSum = 0;
 
     // Sum the sin and cos of the samples
     for (WindDirectionSample sample : wdSamples) {
-      sSum += sample.getSin();
-      cSum += sample.getCos();
+      ssSum += sample.getSin();
+      ccSum += sample.getCos();
     }
 
-    double cAlpha = cSum / wdSamples.size();
-    double sAlpha = sSum / wdSamples.size();
+    double ccAlpha = ccSum / wdSamples.size();
+    double ssAlpha = ssSum / wdSamples.size();
 
     // calculate the average heading
-    double tangent = Math.atan2(cAlpha, sAlpha);
+    double tangent = Math.atan2(ccAlpha, ssAlpha);
     if (tangent <= 0) {
       headingAvg = tangent + 2.0 * Math.PI;
     } else {
@@ -313,16 +317,15 @@ public class WindImpl implements Wind {
     }
 
     // calculate the standard deviation
-    double sAlphaSquared = sAlpha * sAlpha;
-    double cAlphaSquared = cAlpha * cAlpha;
-    double epsilon = Math.sqrt(1.0 - (sAlphaSquared + cAlphaSquared));
+    double ssAlphaSquared = ssAlpha * ssAlpha;
+    double ccAlphaSquared = ccAlpha * ccAlpha;
+    double epsilon = Math.sqrt(1.0 - (ssAlphaSquared + ccAlphaSquared));
 
     // See http://en.wikipedia.org/wiki/Yamartino_method
     if (Double.isNaN(epsilon)) {
       epsilon = 0.0;
     }
 
-    headingSd = Math.asin(epsilon)
-        * (1.0 + (2.0 / Math.sqrt(3.0) - 1.0) * Math.pow(epsilon, 3.0));
+    headingSd = Math.asin(epsilon) * (1.0 + (2.0 / Math.sqrt(3.0) - 1.0) * Math.pow(epsilon, 3.0));
   }
 }

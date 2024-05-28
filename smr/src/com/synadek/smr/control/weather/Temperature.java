@@ -1,6 +1,7 @@
 /**
  * Temperature.java
- * 19 Mar 2017
+ * 28 May 2024
+ *
  * @author Daniel McCue
  */
 
@@ -13,14 +14,14 @@ public interface Temperature {
 
   /**
    * Report the temperature of the air near the vessel.
-   * 
+   *
    * @return the temperature in degrees Celsius
    */
   float airTemperature();
 
   /**
    * Report the water temperature near the surface around the vessel.
-   * 
+   *
    * @return the temperature in degrees Celsius
    */
   float surfaceTemperature();
